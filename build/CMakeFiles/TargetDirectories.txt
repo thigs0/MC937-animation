@@ -1,0 +1,3 @@
+/home/thigs/Documentos/MC937-animation/build/CMakeFiles/main.dir
+/home/thigs/Documentos/MC937-animation/build/CMakeFiles/edit_cache.dir
+/home/thigs/Documentos/MC937-animation/build/CMakeFiles/rebuild_cache.dir
