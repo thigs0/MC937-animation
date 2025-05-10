@@ -133,7 +133,8 @@ int main(int argc, char** argv) {
     GLuint modelLoc = glGetUniformLocation(shaderProgram, "model");
     GLuint viewLoc = glGetUniformLocation(shaderProgram, "view");
     GLuint projLoc = glGetUniformLocation(shaderProgram, "projection");
-
+    
+    //Camera
     glm::mat4 view = glm::lookAt(glm::vec3(9.0f, 9.0f, 9.0f),
                                  glm::vec3(0.0f, 0.0f, 0.0f),
                                  glm::vec3(0.0f, 1.0f, 0.0f));

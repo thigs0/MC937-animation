@@ -20,12 +20,12 @@ message(STATUS "    Libraries: ${OpenCV_LIBS}")
 message(STATUS "    Include path: ${OpenCV_INCLUDE_DIRS}")
 
 # Adicionar o executável
-add_executable(main main.cpp)
+add_executable(scene1 scene1.cpp)
 
 INCLUDE_DIRECTORIES( ${OPENGL_INCLUDE_DIR} ${GLFW_INCLUDE_DIRS} )
 
 # Linkar o OpenCV ao projeto
-target_link_libraries(main ${OpenCV_LIBS})
-target_link_libraries(main OpenGL::GL)
-target_link_libraries(main glfw)
-target_link_libraries(main GLEW::GLEW)
+target_link_libraries(scene1 ${OpenCV_LIBS})
+target_link_libraries(scene1 OpenGL::GL)
+target_link_libraries(scene1 glfw)
+target_link_libraries(scene1 GLEW::GLEW)

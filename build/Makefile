@@ -117,41 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named scene1
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
-.PHONY : main
+scene1: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene1
+.PHONY : scene1
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+scene1/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/build
+.PHONY : scene1/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+scene1.o: scene1.cpp.o
+.PHONY : scene1.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
-.PHONY : main.cpp.o
+scene1.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/scene1.cpp.o
+.PHONY : scene1.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+scene1.i: scene1.cpp.i
+.PHONY : scene1.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
-.PHONY : main.cpp.i
+scene1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/scene1.cpp.i
+.PHONY : scene1.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+scene1.s: scene1.cpp.s
+.PHONY : scene1.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
-.PHONY : main.cpp.s
+scene1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/scene1.cpp.s
+.PHONY : scene1.cpp.s
 
 # Help Target
 help:
@@ -161,10 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... main"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... scene1"
+	@echo "... scene1.o"
+	@echo "... scene1.i"
+	@echo "... scene1.s"
 .PHONY : help
 
 
