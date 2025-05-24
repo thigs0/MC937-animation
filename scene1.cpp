@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <filesystem>
+#include "AABB.hpp"
 
 const float gravity = -9.8f;
 
@@ -24,21 +25,41 @@ struct Velocity {
     float minY;
 };
 
-void updatePhysics(Velocity& obj, float gravity) {
-    obj.vy += gravity * 0.1f;
-    obj.position.y += obj.vy * 0.1f;
+struct PhysObj {
+    glm::vec3 position;
+    float     vy;
+    AABB      bbox;      // bounding box em espaço local
+};
 
-    if (obj.position.y + obj.minY < 0.0f) {
-        obj.position.y = -obj.minY;
-        obj.vy = -obj.vy * 0.8f;  // inverte a velocidade com amortecimento (80%)
+void updatePhysics(PhysObj& obj1, float gravity,float dt) {
+    // 1) Integra gravidade e posição
+    obj1.vy += gravity * dt;
+    obj1.position.y += obj1.vy * dt;
+
+    // 2) Translada a AABB para o espaço de mundo
+    AABB world_box = obj1.bbox;
+    world_box.min_corner += obj1.position;
+    world_box.max_corner += obj1.position;
+
+    // 3) Teste de colisão com o chão (y=0)
+    if (world_box.min_corner.y < 0.0f) {
+        // 3a) Ajusta position para que a caixa fique “encostada” no chão
+        float penetration = -world_box.min_corner.y;
+        obj1.position.y += penetration;
+
+        // 3b) Recalculamos a AABB depois do push-up
+        world_box.min_corner.y += penetration;
+        world_box.max_corner.y += penetration;
+
+        // 3c) “Quica” invertendo vy com amortecimento
+        obj1.vy = -obj1.vy * 0.8f;
         
-        // Elimina pequenos rebotes
-        if (std::abs(obj.vy) < 0.1f) {
-            obj.vy = 0.0f;
-        }
+        // 3d) Se o quique for muito pequeno, zera
+        if (std::abs(obj1.vy) < 0.1f) obj1.vy = 0.0f;
     }
 }
 
+// Recebe um arquivo .obj, o procesa e coloca todos os vértices na referência out_vertices
 bool loadSimpleOBJ(const std::string& filename, std::vector<glm::vec3>& out_vertices) {
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -77,6 +98,7 @@ bool loadSimpleOBJ(const std::string& filename, std::vector<glm::vec3>& out_vert
 
     return true;
 }
+
 
 float getMinY(const std::vector<glm::vec3>& verts) {
     float minY = verts[0].y;
@@ -140,6 +162,7 @@ int main(int argc, char** argv) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    // Cria uma janela 800x600
     GLFWwindow* window = glfwCreateWindow(800, 600, "", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
@@ -152,10 +175,30 @@ int main(int argc, char** argv) {
     glEnable(GL_DEPTH_TEST);
 
     std::vector<glm::vec3> verts1;
-    if (!loadSimpleOBJ(argv[1], verts1)) return -1;
+    if (!loadSimpleOBJ(argv[1], verts1)) {
+        std::cerr << "Falha ao carregar o OBJ!\n";
+        return -1;
+    }
+
+
+    // Faz a bounding box da malha
+    glm::vec3 mesh_min = verts1[0], mesh_max = verts1[0];
+    for (auto& v : verts1) {
+        mesh_min = glm::min(mesh_min, v);
+        mesh_max = glm::max(mesh_max, v);
+    }
+    AABB bbox_local(mesh_min, mesh_max);
+
+    PhysObj obj1 { glm::vec3(-3, 23, 0), 0.0f, bbox_local };
+
+    std::cout << "Vertices carregados: " << verts1.size() << "\n";
+    if (verts1.empty()) {
+        std::cerr << "Nenhum vértice válido encontrado no OBJ!\n";
+        return -1;
+    }
 
     GLuint VAO1 = createVAO(verts1);
-
+    
     GLuint shaderProgram = glCreateProgram();
     GLuint vs = compileShader(GL_VERTEX_SHADER, vertex_shader_src);
     GLuint fs = compileShader(GL_FRAGMENT_SHADER, fragment_shader_src);
@@ -175,12 +218,18 @@ int main(int argc, char** argv) {
                                             800.0f / 600.0f,
                                             0.1f, 100.0f);
 
-    float minY1 = getMinY(verts1);
-    Velocity obj1 { glm::vec3(-3.0f, 23.0f, 0.0f), 0.0f, minY1 };
+    // float minY1 = getMinY(verts1); // Pega o vértice com o menor y do modelo 
+    // Velocity obj1 { glm::vec3(-3.0f, 10.0f, 0.0f), 0.0f, minY1 };
 
-    for (int frame = 0; frame < 600; ++frame) {
-        updatePhysics(obj1, gravity);
 
+    for (int frame = 0; frame < 300; ++frame) {
+
+        std::cout << "Creating frame number:" << frame << std::endl;
+
+        // Define a posição em y do objeto no frame
+        updatePhysics(obj1, gravity,0.1);
+
+        // Reseta a imagem anterior
         glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -201,7 +250,7 @@ int main(int argc, char** argv) {
                 std::swap(pixels[y * 800 * 3 + x], pixels[(599 - y) * 800 * 3 + x]);
             }
         }
-
+        
         std::ostringstream oss;
         oss << "./frame/scene1/" << std::setw(3) << std::setfill('0') << frame << ".png";
         stbi_write_png(oss.str().c_str(), 800, 600, 3, pixels.data(), 800 * 3);

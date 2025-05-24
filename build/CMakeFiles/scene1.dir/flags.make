@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /usr/local/include/opencv4
+CXX_INCLUDES = -I/home/saanders/Desktop/MC937/MC937-animation -I/home/saanders/Desktop/MC937/MC937-animation/stb -I/home/saanders/Desktop/MC937/MC937-animation/hpp -isystem /usr/include/opencv4
 
 CXX_FLAGS = -std=gnu++23
 

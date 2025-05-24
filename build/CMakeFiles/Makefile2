@@ -54,15 +54,16 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/thigs/Documentos/MC937-animation
+CMAKE_SOURCE_DIR = /home/saanders/Desktop/MC937/MC937-animation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/thigs/Documentos/MC937-animation/build
+CMAKE_BINARY_DIR = /home/saanders/Desktop/MC937/MC937-animation/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/collision.dir/all
 all: CMakeFiles/scene1.dir/all
 .PHONY : all
 
@@ -71,24 +72,51 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/collision.dir/clean
 clean: CMakeFiles/scene1.dir/clean
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/collision.dir
+
+# All Build rule for target.
+CMakeFiles/collision.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=1,2 "Built target collision"
+.PHONY : CMakeFiles/collision.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/collision.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/collision.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
+.PHONY : CMakeFiles/collision.dir/rule
+
+# Convenience name for target.
+collision: CMakeFiles/collision.dir/rule
+.PHONY : collision
+
+# clean rule for target.
+CMakeFiles/collision.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/clean
+.PHONY : CMakeFiles/collision.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/scene1.dir
 
 # All Build rule for target.
-CMakeFiles/scene1.dir/all:
+CMakeFiles/scene1.dir/all: CMakeFiles/collision.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=1,2 "Built target scene1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=3,4 "Built target scene1"
 .PHONY : CMakeFiles/scene1.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/scene1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/scene1.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
 .PHONY : CMakeFiles/scene1.dir/rule
 
 # Convenience name for target.

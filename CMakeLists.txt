@@ -1,31 +1,58 @@
-# Versão mínima do CMake necessária
 cmake_minimum_required(VERSION 3.10)
+project(MC937Animation)
 
-# Nome do projeto
-project(main)
-
+# Use C++23
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Encontrar o OpenCV instalado no sistema
+# Onde está o seu código-fonte
+set(PROJECT_ROOT ${CMAKE_SOURCE_DIR})
+
+# 1) Pacotes externos
 find_package(OpenGL REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 find_package(GLEW REQUIRED)
 
-# Mensagem de status para verificar se o OpenCV foi encontrado
-message(STATUS "OpenCV library status:")
-message(STATUS "    Version: ${OpenCV_VERSION}")
-message(STATUS "    Libraries: ${OpenCV_LIBS}")
-message(STATUS "    Include path: ${OpenCV_INCLUDE_DIRS}")
+# 2) Diretórios de include
+#    - OpenGL, GLFW, GLEW, OpenCV
+#    - sua pasta stb local
+include_directories(
+    ${CMAKE_SOURCE_DIR}          
+    ${CMAKE_SOURCE_DIR}/stb
+    ${CMAKE_SOURCE_DIR}/hpp
+    ${OpenCV_INCLUDE_DIRS}
+    ${OPENGL_INCLUDE_DIR}
+    ${GLFW_INCLUDE_DIRS}
+    ${GLEW_INCLUDE_DIRS}
+)
 
-# Adicionar o executável
-add_executable(scene1 scene1.cpp)
+add_library(collision STATIC
+    ${CMAKE_SOURCE_DIR}/AABB.cpp
+)
 
-INCLUDE_DIRECTORIES( ${OPENGL_INCLUDE_DIR} ${GLFW_INCLUDE_DIRS} )
+target_include_directories(collision PUBLIC
+    ${CMAKE_SOURCE_DIR}/hpp
+)
 
-# Linkar o OpenCV ao projeto
-target_link_libraries(scene1 ${OpenCV_LIBS})
-target_link_libraries(scene1 OpenGL::GL)
-target_link_libraries(scene1 glfw)
-target_link_libraries(scene1 GLEW::GLEW)
+# 3) Executável
+add_executable(scene1
+    scene1.cpp
+)
+
+target_include_directories(scene1 PRIVATE
+    ${CMAKE_SOURCE_DIR}/hpp
+)
+
+# 4) Linkagem
+target_link_libraries(scene1
+    collision
+    ${OpenCV_LIBS}
+    OpenGL::GL
+    glfw
+    GLEW::GLEW
+)
+
+# 5) Mensagens de debug (opcional)
+message(STATUS "OpenCV include: ${OpenCV_INCLUDE_DIRS}")
+message(STATUS "STB include:   ${PROJECT_ROOT}/stb")

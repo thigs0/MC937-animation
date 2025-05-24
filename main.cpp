@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm> 
 
 // Função simples para carregar arquivos OBJ
 bool loadSimpleOBJ(const std::string& filename, std::vector<glm::vec3>& out_vertices) {

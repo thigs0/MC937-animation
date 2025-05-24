@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/thigs/Documentos/MC937-animation
+CMAKE_SOURCE_DIR = /home/saanders/Desktop/MC937/MC937-animation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/thigs/Documentos/MC937-animation/build
+CMAKE_BINARY_DIR = /home/saanders/Desktop/MC937/MC937-animation/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles /home/thigs/Documentos/MC937-animation/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles /home/saanders/Desktop/MC937/MC937-animation/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named collision
+
+# Build rule for target.
+collision: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 collision
+.PHONY : collision
+
+# fast build rule for target.
+collision/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/build
+.PHONY : collision/fast
+
+#=============================================================================
 # Target rules for targets named scene1
 
 # Build rule for target.
@@ -128,6 +141,30 @@ scene1: cmake_check_build_system
 scene1/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/build
 .PHONY : scene1/fast
+
+AABB.o: AABB.cpp.o
+.PHONY : AABB.o
+
+# target to build an object file
+AABB.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/AABB.cpp.o
+.PHONY : AABB.cpp.o
+
+AABB.i: AABB.cpp.i
+.PHONY : AABB.i
+
+# target to preprocess a source file
+AABB.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/AABB.cpp.i
+.PHONY : AABB.cpp.i
+
+AABB.s: AABB.cpp.s
+.PHONY : AABB.s
+
+# target to generate assembly for a file
+AABB.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/AABB.cpp.s
+.PHONY : AABB.cpp.s
 
 scene1.o: scene1.cpp.o
 .PHONY : scene1.o
@@ -161,7 +198,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... collision"
 	@echo "... scene1"
+	@echo "... AABB.o"
+	@echo "... AABB.i"
+	@echo "... AABB.s"
 	@echo "... scene1.o"
 	@echo "... scene1.i"
 	@echo "... scene1.s"
