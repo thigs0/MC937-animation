@@ -5,6 +5,8 @@ project(MC937Animation)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+cmake_policy(SET CMP0072 NEW)
+
 # Onde está o seu código-fonte
 set(PROJECT_ROOT ${CMAKE_SOURCE_DIR})
 
@@ -30,6 +32,13 @@ include_directories(
 add_library(collision STATIC
     ${CMAKE_SOURCE_DIR}/AABB.cpp
 )
+add_library(physics STATIC
+    ${CMAKE_SOURCE_DIR}/physics.cpp
+)
+
+target_include_directories(physics PUBLIC
+    ${CMAKE_SOURCE_DIR}/hpp
+)
 
 target_include_directories(collision PUBLIC
     ${CMAKE_SOURCE_DIR}/hpp
@@ -40,6 +49,15 @@ add_executable(scene1
     scene1.cpp
 )
 
+add_executable(scene2
+    scene2.cpp
+)
+
+add_executable(scene3
+    scene3.cpp
+)
+
+
 target_include_directories(scene1 PRIVATE
     ${CMAKE_SOURCE_DIR}/hpp
 )
@@ -47,6 +65,25 @@ target_include_directories(scene1 PRIVATE
 # 4) Linkagem
 target_link_libraries(scene1
     collision
+    physics         # <-- adicione aqui
+    ${OpenCV_LIBS}
+    OpenGL::GL
+    glfw
+    GLEW::GLEW
+)
+
+target_link_libraries(scene2
+    collision
+    physics
+    ${OpenCV_LIBS}
+    OpenGL::GL
+    glfw
+    GLEW::GLEW
+)
+
+target_link_libraries(scene3
+    collision
+    physics
     ${OpenCV_LIBS}
     OpenGL::GL
     glfw

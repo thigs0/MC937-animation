@@ -15,15 +15,13 @@
 #include <iomanip>
 #include <algorithm>
 #include <filesystem>
+
 #include "AABB.hpp"
+#include "physics.hpp"  // Deve conter PhysicalObject e update_ambient_forces()
+#include "hpp/obj_loader.hpp"
 
-const float gravity = -9.8f;
-
-struct Velocity {
-    glm::vec3 position;
-    float vy;
-    float minY;
-};
+// Objeto físico global
+PhysicalObject homer;
 
 struct PhysObj {
     glm::vec3 position;
@@ -31,33 +29,52 @@ struct PhysObj {
     AABB      bbox;      // bounding box em espaço local
 };
 
-void updatePhysics(PhysObj& obj1, float gravity,float dt) {
-    // 1) Integra gravidade e posição
-    obj1.vy += gravity * dt;
-    obj1.position.y += obj1.vy * dt;
+void updatePhysics(PhysObj& obj1, double dt) {
+    update_ambient_forces(&homer, dt);
 
-    // 2) Translada a AABB para o espaço de mundo
+    // Atualiza a posição do PhysObj com a posição do homer (sincroniza)
+    obj1.position = homer.position;
+    obj1.vy = static_cast<float>(homer.velocity.y);
+
+    // Translada a AABB para o espaço de mundo
     AABB world_box = obj1.bbox;
     world_box.min_corner += obj1.position;
     world_box.max_corner += obj1.position;
 
-    // 3) Teste de colisão com o chão (y=0)
+    // Teste de colisão com o chão (y=0)
     if (world_box.min_corner.y < 0.0f) {
-        // 3a) Ajusta position para que a caixa fique “encostada” no chão
+        // Ajusta position para que a caixa fique encostada no chão
         float penetration = -world_box.min_corner.y;
         obj1.position.y += penetration;
 
-        // 3b) Recalculamos a AABB depois do push-up
+        // Atualiza o objeto homer também
+        homer.position.y += penetration;
+        if (homer.velocity.y < 0)
+            homer.velocity.y = -homer.velocity.y * 0.8;
+
+        // Recalcula a AABB após ajuste
         world_box.min_corner.y += penetration;
         world_box.max_corner.y += penetration;
 
-        // 3c) “Quica” invertendo vy com amortecimento
-        obj1.vy = -obj1.vy * 0.8f;
-        
-        // 3d) Se o quique for muito pequeno, zera
-        if (std::abs(obj1.vy) < 0.1f) obj1.vy = 0.0f;
+        // Zera a velocidade vertical se muito pequena
+        if (std::abs(homer.velocity.y) < 0.1f) {
+            homer.velocity.y = 0.0;
+            obj1.vy = 0.0f;
+        }
     }
 }
+GLuint createVAO(const std::vector<glm::vec3>& vertices) {
+      GLuint VAO, VBO;
+      glGenVertexArrays(1, &VAO);
+      glGenBuffers(1, &VBO);
+
+      glBindVertexArray(VAO);
+      glBindBuffer(GL_ARRAY_BUFFER, VBO);
+      glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+      glEnableVertexAttribArray(0);
+      return VAO;
+  }
 
 // Recebe um arquivo .obj, o procesa e coloca todos os vértices na referência out_vertices
 bool loadSimpleOBJ(const std::string& filename, std::vector<glm::vec3>& out_vertices) {
@@ -98,7 +115,12 @@ bool loadSimpleOBJ(const std::string& filename, std::vector<glm::vec3>& out_vert
 
     return true;
 }
-
+GLuint compileShader(GLenum type, const char* src) {
+    GLuint shader = glCreateShader(type);
+    glShaderSource(shader, 1, &src, nullptr);
+    glCompileShader(shader);
+    return shader;
+}
 
 float getMinY(const std::vector<glm::vec3>& verts) {
     float minY = verts[0].y;
@@ -107,53 +129,36 @@ float getMinY(const std::vector<glm::vec3>& verts) {
     }
     return minY;
 }
-
-GLuint compileShader(GLenum type, const char* src) {
-    GLuint shader = glCreateShader(type);
-    glShaderSource(shader, 1, &src, nullptr);
-    glCompileShader(shader);
-    return shader;
-}
-
-GLuint createVAO(const std::vector<glm::vec3>& vertices) {
-    GLuint VAO, VBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    glEnableVertexAttribArray(0);
-    return VAO;
-}
-
 const char* vertex_shader_src = R"(
 #version 330 core
-layout (location = 0) in vec3 position;
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
-void main() {
-    gl_Position = projection * view * model * vec4(position, 1.0);
-}
+  layout (location = 0) in vec3 position;
+  uniform mat4 model;
+  uniform mat4 view;
+  uniform mat4 projection;
+  void main() {
+      gl_Position = projection * view * model * vec4(position, 1.0);
+  }
 )";
 
 const char* fragment_shader_src = R"(
 #version 330 core
-out vec4 fragColor;
-void main() {
-    fragColor = vec4(1.0, 0.6, 0.2, 1.0);
-}
+  out vec4 fragColor;
+  void main() {
+      fragColor = vec4(1.0, 0.6, 0.2, 1.0);
+  }
 )";
 
+// *** MAIN ***
 int main(int argc, char** argv) {
     if (argc < 2) {
         std::cerr << "Uso: ./render modelo1.obj" << std::endl;
         return -1;
     }
 
-    //std::filesystem::create_directories("frame/");
+    // Inicializa 'homer'
+    homer.mass = 1.0;
+    homer.position = glm::dvec3(0.0, 5.0, 0.0);
+    homer.velocity = glm::dvec3(0.0, 0.0, 0.0);
 
     if (!glfwInit()) return -1;
 
@@ -162,7 +167,6 @@ int main(int argc, char** argv) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // Cria uma janela 800x600
     GLFWwindow* window = glfwCreateWindow(800, 600, "", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
@@ -180,8 +184,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-
-    // Faz a bounding box da malha
+    // Bounding box da malha
     glm::vec3 mesh_min = verts1[0], mesh_max = verts1[0];
     for (auto& v : verts1) {
         mesh_min = glm::min(mesh_min, v);
@@ -191,14 +194,9 @@ int main(int argc, char** argv) {
 
     PhysObj obj1 { glm::vec3(-3, 23, 0), 0.0f, bbox_local };
 
-    std::cout << "Vertices carregados: " << verts1.size() << "\n";
-    if (verts1.empty()) {
-        std::cerr << "Nenhum vértice válido encontrado no OBJ!\n";
-        return -1;
-    }
-
     GLuint VAO1 = createVAO(verts1);
-    
+
+    // Compile shaders e programa
     GLuint shaderProgram = glCreateProgram();
     GLuint vs = compileShader(GL_VERTEX_SHADER, vertex_shader_src);
     GLuint fs = compileShader(GL_FRAGMENT_SHADER, fragment_shader_src);
@@ -218,18 +216,13 @@ int main(int argc, char** argv) {
                                             800.0f / 600.0f,
                                             0.1f, 100.0f);
 
-    // float minY1 = getMinY(verts1); // Pega o vértice com o menor y do modelo 
-    // Velocity obj1 { glm::vec3(-3.0f, 10.0f, 0.0f), 0.0f, minY1 };
-
-
     for (int frame = 0; frame < 300; ++frame) {
+        std::cout << "Creating frame number: " << frame << std::endl;
 
-        std::cout << "Creating frame number:" << frame << std::endl;
+        // Atualiza física com delta time 0.1s
+        updatePhysics(obj1, 0.1);
 
-        // Define a posição em y do objeto no frame
-        updatePhysics(obj1, gravity,0.1);
-
-        // Reseta a imagem anterior
+        // Render
         glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -242,6 +235,7 @@ int main(int argc, char** argv) {
         glBindVertexArray(VAO1);
         glDrawArrays(GL_TRIANGLES, 0, verts1.size());
 
+        // Captura frame e salva
         std::vector<unsigned char> pixels(800 * 600 * 3);
         glReadPixels(0, 0, 800, 600, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
 
@@ -250,7 +244,7 @@ int main(int argc, char** argv) {
                 std::swap(pixels[y * 800 * 3 + x], pixels[(599 - y) * 800 * 3 + x]);
             }
         }
-        
+
         std::ostringstream oss;
         oss << "./frame/scene1/" << std::setw(3) << std::setfill('0') << frame << ".png";
         stbi_write_png(oss.str().c_str(), 800, 600, 3, pixels.data(), 800 * 3);

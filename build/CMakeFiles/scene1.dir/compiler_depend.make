@@ -3,9 +3,11 @@
 
 CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
   /usr/include/stdc-predef.h \
-  ../stb/stb_image_write.h \
-  /usr/include/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/stb/stb_image_write.h \
+  /usr/include/c++/11/stdlib.h \
+  /usr/include/c++/11/cstdlib \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
   /usr/include/features.h \
   /usr/include/features-time64.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -14,33 +16,21 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
-  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
-  /usr/include/x86_64-linux-gnu/bits/types.h \
-  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
-  /usr/include/x86_64-linux-gnu/bits/time64.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
-  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
-  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/floatn.h \
-  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
-  /usr/include/c++/11/stdlib.h \
-  /usr/include/c++/11/cstdlib \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
-  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h \
   /usr/include/c++/11/pstl/pstl_config.h \
   /usr/include/stdlib.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
   /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
@@ -66,6 +56,16 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
   /usr/include/alloca.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/c++/11/bits/std_abs.h \
+  /usr/include/stdio.h \
+  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/string.h \
   /usr/include/strings.h \
   /usr/include/c++/11/math.h \
@@ -487,8 +487,65 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
   /usr/include/c++/11/bits/shared_ptr_base.h \
   /usr/include/c++/11/bits/allocated_ptr.h \
   /usr/include/c++/11/bits/fs_dir.h \
-  /usr/include/c++/11/bits/fs_ops.h
+  /usr/include/c++/11/bits/fs_ops.h \
+  ../hpp/AABB.hpp \
+  /usr/include/c++/11/memory \
+  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/11/bits/align.h \
+  /usr/include/c++/11/bit \
+  /usr/include/c++/11/bits/shared_ptr_atomic.h \
+  /usr/include/c++/11/bits/atomic_base.h \
+  /usr/include/c++/11/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/11/bits/atomic_wait.h \
+  /usr/include/unistd.h \
+  /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+  /usr/include/x86_64-linux-gnu/bits/environments.h \
+  /usr/include/x86_64-linux-gnu/bits/confname.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
+  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
+  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
+  /usr/include/linux/close_range.h \
+  /usr/include/syscall.h \
+  /usr/include/x86_64-linux-gnu/sys/syscall.h \
+  /usr/include/x86_64-linux-gnu/asm/unistd.h \
+  /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
+  /usr/include/x86_64-linux-gnu/bits/syscall.h \
+  /usr/include/c++/11/bits/std_mutex.h \
+  /usr/include/c++/11/backward/auto_ptr.h \
+  /usr/include/c++/11/bits/ranges_uninitialized.h \
+  /usr/include/c++/11/bits/uses_allocator_args.h \
+  /usr/include/c++/11/pstl/glue_memory_defs.h \
+  ../hpp/physics.hpp \
+  ../hpp/obj_loader.hpp
 
+
+/usr/include/c++/11/pstl/glue_memory_defs.h:
+
+/usr/include/x86_64-linux-gnu/bits/syscall.h:
+
+/usr/include/x86_64-linux-gnu/sys/syscall.h:
+
+/usr/include/syscall.h:
+
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
+/usr/include/c++/11/bits/atomic_wait.h:
+
+/usr/include/c++/11/bits/atomic_lockfree_defines.h:
+
+/usr/include/c++/11/bits/atomic_base.h:
+
+/usr/include/c++/11/bits/shared_ptr_atomic.h:
+
+/usr/include/c++/11/bits/stl_raw_storage_iter.h:
+
+/usr/include/c++/11/memory:
+
+../hpp/AABB.hpp:
 
 /usr/include/c++/11/bits/fs_dir.h:
 
@@ -505,6 +562,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/c++/11/bits/stream_iterator.h:
 
 /usr/include/c++/11/algorithm:
+
+/usr/include/c++/11/bits/quoted_string.h:
 
 /usr/include/c++/11/bits/invoke.h:
 
@@ -531,6 +590,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/c++/11/bits/stl_uninitialized.h:
 
 /usr/include/c++/11/vector:
+
+/usr/include/x86_64-linux-gnu/asm/unistd_64.h:
 
 /usr/include/c++/11/sstream:
 
@@ -584,6 +645,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/c++/11/bits/string_view.tcc:
 
+/usr/include/c++/11/bits/align.h:
+
 /usr/include/c++/11/bits/max_size_type.h:
 
 /usr/include/c++/11/bits/functional_hash.h:
@@ -604,6 +667,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
+/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
+
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
 /usr/include/time.h:
@@ -623,6 +688,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/c++/11/locale:
 
 /usr/include/ctype.h:
+
+/usr/include/x86_64-linux-gnu/asm/unistd.h:
 
 /usr/include/c++/11/iomanip:
 
@@ -746,6 +813,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/glm/ext/matrix_double2x2_precision.hpp:
 
+/usr/include/linux/close_range.h:
+
 /usr/include/glm/detail/func_vector_relational.inl:
 
 /usr/include/c++/11/bits/streambuf_iterator.h:
@@ -768,6 +837,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/c++/11/cstddef:
 
+/usr/include/c++/11/bits/stl_iterator_base_types.h:
+
 /usr/include/c++/11/tr1/hypergeometric.tcc:
 
 /usr/include/c++/11/pstl/glue_algorithm_defs.h:
@@ -777,8 +848,6 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/glm/ext/matrix_float3x2_precision.hpp:
 
 /usr/include/c++/11/tr1/ell_integral.tcc:
-
-/usr/include/c++/11/bits/stl_iterator_base_types.h:
 
 /usr/include/c++/11/tr1/exp_integral.tcc:
 
@@ -872,22 +941,6 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/glm/ext/matrix_float4x4.hpp:
 
-/usr/include/c++/11/bits/ranges_util.h:
-
-/usr/include/glm/ext/vector_double2_precision.hpp:
-
-/usr/include/c++/11/bits/stl_algobase.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
-
-/usr/include/glm/gtc/type_ptr.inl:
-
-/usr/include/glm/ext/matrix_double4x2.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/math-vector.h:
-
-/usr/include/c++/11/cassert:
-
 /usr/include/glm/ext/quaternion_float.hpp:
 
 /usr/include/glm/mat4x4.hpp:
@@ -900,6 +953,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
+/usr/include/c++/11/bits/uses_allocator_args.h:
+
 /usr/include/glm/detail/func_matrix.inl:
 
 /usr/include/glm/detail/compute_common.hpp:
@@ -907,20 +962,6 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/strings.h:
 
 /usr/include/glm/ext/matrix_float3x3_precision.hpp:
-
-/usr/include/c++/11/tr1/poly_laguerre.tcc:
-
-/usr/include/glm/ext/vector_bool2.hpp:
-
-/usr/include/c++/11/iterator:
-
-/usr/include/c++/11/bits/range_access.h:
-
-/usr/include/x86_64-linux-gnu/bits/floatn.h:
-
-/usr/include/c++/11/bits/quoted_string.h:
-
-../stb/stb_image_write.h:
 
 /usr/include/x86_64-linux-gnu/bits/timex.h:
 
@@ -930,21 +971,69 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/glm/detail/_fixes.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/endian.h:
-
-/usr/include/glm/detail/func_packing.inl:
-
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
 /usr/include/c++/11/tr1/poly_hermite.tcc:
 
-/usr/include/c++/11/ext/numeric_traits.h:
+/usr/include/c++/11/ext/aligned_buffer.h:
 
-/usr/include/features.h:
+/usr/include/x86_64-linux-gnu/sys/types.h:
 
-/usr/include/c++/11/typeinfo:
+/usr/include/c++/11/cstdint:
 
-/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/c++/11/tr1/special_function_util.h:
+
+/usr/include/c++/11/bits/predefined_ops.h:
+
+/usr/include/glm/mat3x3.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/x86_64-linux-gnu/bits/endianness.h:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h:
+
+/usr/include/glm/detail/type_mat2x4.hpp:
+
+/usr/include/glm/ext/matrix_float4x3.hpp:
+
+/usr/include/glm/detail/func_integer.inl:
+
+/usr/include/stdlib.h:
+
+/usr/include/glm/glm.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+/usr/include/c++/11/cstdlib:
+
+/usr/include/glm/detail/type_mat3x4.inl:
+
+/usr/include/c++/11/chrono:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/c++/11/bits/locale_classes.h:
+
+/usr/include/glm/mat2x3.hpp:
+
+/usr/include/c++/11/pstl/pstl_config.h:
+
+/usr/include/x86_64-linux-gnu/bits/endian.h:
+
+../scene1.cpp:
+
+/usr/include/c++/11/limits:
+
+/usr/include/glm/ext/vector_float3_precision.hpp:
+
+/usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
+
+/usr/include/x86_64-linux-gnu/bits/timesize.h:
+
+/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+
+/usr/include/GL/gl.h:
 
 /usr/include/c++/11/tr1/gamma.tcc:
 
@@ -968,95 +1057,31 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/glm/ext/matrix_double2x2.hpp:
 
-/usr/include/c++/11/bits/predefined_ops.h:
+/usr/include/c++/11/typeinfo:
 
-/usr/include/glm/mat3x3.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
-
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
-
-/usr/include/glm/ext/matrix_float2x3_precision.hpp:
+/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
 /usr/include/c++/11/tr1/modified_bessel_func.tcc:
 
-/usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h:
+/usr/include/glm/ext/matrix_float2x3_precision.hpp:
 
-/usr/include/glm/detail/type_mat2x4.hpp:
+/usr/include/c++/11/ext/numeric_traits.h:
 
-/usr/include/glm/ext/matrix_float4x3.hpp:
+/usr/include/features.h:
 
-/usr/include/x86_64-linux-gnu/bits/timesize.h:
+/usr/include/c++/11/bits/stl_iterator_base_funcs.h:
 
-/usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h:
+/usr/include/c++/11/bits/cpp_type_traits.h:
 
-/usr/include/GL/glu.h:
+/usr/include/c++/11/ext/alloc_traits.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+/usr/include/x86_64-linux-gnu/bits/sched.h:
 
-/usr/include/c++/11/bits/ostream_insert.h:
+/usr/include/glm/ext/vector_uint2_sized.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
+/usr/include/glm/ext/matrix_clip_space.hpp:
 
-../scene1.cpp:
-
-/usr/include/c++/11/tr1/special_function_util.h:
-
-/usr/include/c++/11/cstdint:
-
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
-
-/usr/include/stdio.h:
-
-/usr/include/c++/11/bits/ranges_algobase.h:
-
-/usr/include/glm/ext/matrix_double2x4.hpp:
-
-/usr/include/c++/11/limits:
-
-/usr/include/glm/ext/vector_float3_precision.hpp:
-
-/usr/include/GL/gl.h:
-
-/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
-
-/usr/include/glm/ext/quaternion_transform.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
-
-/usr/include/c++/11/cstring:
-
-/usr/include/glm/common.hpp:
-
-/usr/include/math.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/glm/ext/vector_double1_precision.hpp:
-
-/usr/include/glm/ext/vector_int3.hpp:
-
-/usr/include/glm/exponential.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
-
-/usr/include/c++/11/bits/alloc_traits.h:
-
-/usr/include/glm/gtc/epsilon.hpp:
-
-/usr/include/glm/ext/matrix_float2x2_precision.hpp:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/glm/ext/vector_uint1_sized.hpp:
-
-/usr/include/glm/ext/vector_float2.hpp:
-
-/usr/include/c++/11/debug/assertions.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h:
-
-/usr/include/glm/ext/scalar_uint_sized.hpp:
+/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/c++/11/tr1/bessel_function.tcc:
 
@@ -1076,13 +1101,47 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/time64.h:
+/usr/include/stdio.h:
 
-/usr/include/c++/11/backward/binders.h:
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
-/usr/include/glm/detail/type_vec3.hpp:
+/usr/include/c++/11/bits/ranges_algobase.h:
 
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+/usr/include/glm/ext/matrix_double2x4.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+
+/usr/include/GL/glu.h:
+
+/usr/include/glm/detail/func_packing.inl:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+/usr/include/c++/11/bits/ranges_util.h:
+
+/usr/include/glm/ext/vector_double2_precision.hpp:
+
+/usr/include/unistd.h:
+
+/usr/include/c++/11/bits/stl_algobase.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
+
+/usr/include/glm/gtc/type_ptr.inl:
+
+/usr/include/glm/ext/matrix_double4x2.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/math-vector.h:
+
+/usr/include/c++/11/cassert:
+
+/usr/include/c++/11/iterator:
+
+/usr/include/c++/11/bits/range_access.h:
+
+/usr/include/x86_64-linux-gnu/bits/floatn.h:
+
+/usr/include/stb/stb_image_write.h:
 
 /usr/include/c++/11/bits/ranges_algo.h:
 
@@ -1090,47 +1149,39 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/c++/11/bits/stl_iterator_base_funcs.h:
+/usr/include/c++/11/cstring:
 
-/usr/include/c++/11/bits/cpp_type_traits.h:
+/usr/include/glm/common.hpp:
 
-/usr/include/c++/11/ext/alloc_traits.h:
+/usr/include/math.h:
 
-/usr/include/x86_64-linux-gnu/bits/sched.h:
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
-/usr/include/glm/ext/vector_uint2_sized.hpp:
+/usr/include/glm/ext/vector_double1_precision.hpp:
 
-/usr/include/glm/ext/matrix_clip_space.hpp:
+/usr/include/glm/ext/vector_int3.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
+/usr/include/glm/exponential.hpp:
 
-/usr/include/c++/11/chrono:
-
-/usr/include/x86_64-linux-gnu/bits/wordsize.h:
-
-/usr/include/c++/11/bits/locale_classes.h:
-
-/usr/include/glm/mat2x3.hpp:
-
-/usr/include/glm/detail/func_integer.inl:
-
-/usr/include/stdlib.h:
-
-/usr/include/glm/glm.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
-
-/usr/include/c++/11/cstdlib:
-
-/usr/include/glm/detail/type_mat3x4.inl:
-
-/usr/include/c++/11/pstl/pstl_config.h:
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
-/usr/include/c++/11/ext/aligned_buffer.h:
+/usr/include/x86_64-linux-gnu/bits/time64.h:
 
-/usr/include/x86_64-linux-gnu/sys/types.h:
+/usr/include/c++/11/backward/binders.h:
+
+/usr/include/glm/detail/type_vec3.hpp:
+
+/usr/include/c++/11/bits/std_mutex.h:
+
+/usr/include/c++/11/tr1/poly_laguerre.tcc:
+
+/usr/include/glm/ext/vector_bool2.hpp:
+
+/usr/include/c++/11/bits/ostream_insert.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/include/c++/11/bits/erase_if.h:
 
@@ -1143,6 +1194,26 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/glm/ext/quaternion_geometric.hpp:
 
 /usr/include/glm/ext/matrix_float3x4.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/c++/11/bits/alloc_traits.h:
+
+/usr/include/glm/gtc/epsilon.hpp:
+
+/usr/include/glm/ext/matrix_float2x2_precision.hpp:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/glm/ext/vector_uint1_sized.hpp:
+
+/usr/include/glm/ext/vector_float2.hpp:
+
+/usr/include/c++/11/debug/assertions.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h:
+
+/usr/include/glm/ext/scalar_uint_sized.hpp:
 
 /usr/include/c++/11/codecvt:
 
@@ -1158,6 +1229,16 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/glm/mat4x2.hpp:
 
+../hpp/physics.hpp:
+
+/usr/include/glm/ext/quaternion_transform.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
+
+/usr/include/glm/ext/matrix_float4x4_precision.hpp:
+
 /usr/include/c++/11/bits/ranges_base.h:
 
 /usr/include/c++/11/bits/stl_heap.h:
@@ -1166,13 +1247,11 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/c++/11/bits/std_abs.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
-
-/usr/include/glm/ext/matrix_float4x4_precision.hpp:
-
 /usr/include/c++/11/tr1/riemann_zeta.tcc:
 
 /usr/include/glm/ext/vector_float4.hpp:
+
+/usr/include/c++/11/bits/ranges_uninitialized.h:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
@@ -1344,6 +1423,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/glm/ext/vector_int4_sized.hpp:
 
+/usr/include/x86_64-linux-gnu/bits/environments.h:
+
 /usr/include/c++/11/bits/exception_defines.h:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h:
@@ -1390,6 +1471,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 
 /usr/include/glm/mat3x2.hpp:
 
+/usr/include/c++/11/bit:
+
 /usr/include/glm/detail/type_mat4x2.inl:
 
 /usr/include/glm/detail/type_mat4x2.hpp:
@@ -1401,6 +1484,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/c++/11/bits/iterator_concepts.h:
 
 /usr/include/glm/ext/matrix_double3x2.hpp:
+
+/usr/include/c++/11/backward/auto_ptr.h:
 
 /usr/include/glm/ext/matrix_float3x2.hpp:
 
@@ -1421,6 +1506,8 @@ CMakeFiles/scene1.dir/scene1.cpp.o: ../scene1.cpp \
 /usr/include/glm/ext/matrix_float3x3.hpp:
 
 /usr/include/glm/mat3x4.hpp:
+
+../hpp/obj_loader.hpp:
 
 /usr/include/glm/ext/matrix_double3x4.hpp:
 

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/saanders/Desktop/MC937/MC937-animation
+CMAKE_SOURCE_DIR = /home/thigs/Documentos/MC937-animation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/saanders/Desktop/MC937/MC937-animation/build
+CMAKE_BINARY_DIR = /home/thigs/Documentos/MC937-animation/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles /home/saanders/Desktop/MC937/MC937-animation/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles /home/thigs/Documentos/MC937-animation/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -130,6 +130,19 @@ collision/fast:
 .PHONY : collision/fast
 
 #=============================================================================
+# Target rules for targets named physics
+
+# Build rule for target.
+physics: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 physics
+.PHONY : physics
+
+# fast build rule for target.
+physics/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/build
+.PHONY : physics/fast
+
+#=============================================================================
 # Target rules for targets named scene1
 
 # Build rule for target.
@@ -141,6 +154,32 @@ scene1: cmake_check_build_system
 scene1/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/build
 .PHONY : scene1/fast
+
+#=============================================================================
+# Target rules for targets named scene2
+
+# Build rule for target.
+scene2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene2
+.PHONY : scene2
+
+# fast build rule for target.
+scene2/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene2.dir/build.make CMakeFiles/scene2.dir/build
+.PHONY : scene2/fast
+
+#=============================================================================
+# Target rules for targets named scene3
+
+# Build rule for target.
+scene3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scene3
+.PHONY : scene3
+
+# fast build rule for target.
+scene3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene3.dir/build.make CMakeFiles/scene3.dir/build
+.PHONY : scene3/fast
 
 AABB.o: AABB.cpp.o
 .PHONY : AABB.o
@@ -166,6 +205,30 @@ AABB.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/AABB.cpp.s
 .PHONY : AABB.cpp.s
 
+physics.o: physics.cpp.o
+.PHONY : physics.o
+
+# target to build an object file
+physics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/physics.cpp.o
+.PHONY : physics.cpp.o
+
+physics.i: physics.cpp.i
+.PHONY : physics.i
+
+# target to preprocess a source file
+physics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/physics.cpp.i
+.PHONY : physics.cpp.i
+
+physics.s: physics.cpp.s
+.PHONY : physics.s
+
+# target to generate assembly for a file
+physics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/physics.cpp.s
+.PHONY : physics.cpp.s
+
 scene1.o: scene1.cpp.o
 .PHONY : scene1.o
 
@@ -190,6 +253,54 @@ scene1.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/scene1.cpp.s
 .PHONY : scene1.cpp.s
 
+scene2.o: scene2.cpp.o
+.PHONY : scene2.o
+
+# target to build an object file
+scene2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene2.dir/build.make CMakeFiles/scene2.dir/scene2.cpp.o
+.PHONY : scene2.cpp.o
+
+scene2.i: scene2.cpp.i
+.PHONY : scene2.i
+
+# target to preprocess a source file
+scene2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene2.dir/build.make CMakeFiles/scene2.dir/scene2.cpp.i
+.PHONY : scene2.cpp.i
+
+scene2.s: scene2.cpp.s
+.PHONY : scene2.s
+
+# target to generate assembly for a file
+scene2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene2.dir/build.make CMakeFiles/scene2.dir/scene2.cpp.s
+.PHONY : scene2.cpp.s
+
+scene3.o: scene3.cpp.o
+.PHONY : scene3.o
+
+# target to build an object file
+scene3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene3.dir/build.make CMakeFiles/scene3.dir/scene3.cpp.o
+.PHONY : scene3.cpp.o
+
+scene3.i: scene3.cpp.i
+.PHONY : scene3.i
+
+# target to preprocess a source file
+scene3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene3.dir/build.make CMakeFiles/scene3.dir/scene3.cpp.i
+.PHONY : scene3.cpp.i
+
+scene3.s: scene3.cpp.s
+.PHONY : scene3.s
+
+# target to generate assembly for a file
+scene3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene3.dir/build.make CMakeFiles/scene3.dir/scene3.cpp.s
+.PHONY : scene3.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -199,13 +310,25 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... collision"
+	@echo "... physics"
 	@echo "... scene1"
+	@echo "... scene2"
+	@echo "... scene3"
 	@echo "... AABB.o"
 	@echo "... AABB.i"
 	@echo "... AABB.s"
+	@echo "... physics.o"
+	@echo "... physics.i"
+	@echo "... physics.s"
 	@echo "... scene1.o"
 	@echo "... scene1.i"
 	@echo "... scene1.s"
+	@echo "... scene2.o"
+	@echo "... scene2.i"
+	@echo "... scene2.s"
+	@echo "... scene3.o"
+	@echo "... scene3.i"
+	@echo "... scene3.s"
 .PHONY : help
 
 

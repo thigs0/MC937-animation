@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/saanders/Desktop/MC937/MC937-animation
+CMAKE_SOURCE_DIR = /home/thigs/Documentos/MC937-animation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/saanders/Desktop/MC937/MC937-animation/build
+CMAKE_BINARY_DIR = /home/thigs/Documentos/MC937-animation/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/collision.dir/depend.make
@@ -72,16 +72,16 @@ include CMakeFiles/collision.dir/flags.make
 CMakeFiles/collision.dir/AABB.cpp.o: CMakeFiles/collision.dir/flags.make
 CMakeFiles/collision.dir/AABB.cpp.o: ../AABB.cpp
 CMakeFiles/collision.dir/AABB.cpp.o: CMakeFiles/collision.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/collision.dir/AABB.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/collision.dir/AABB.cpp.o -MF CMakeFiles/collision.dir/AABB.cpp.o.d -o CMakeFiles/collision.dir/AABB.cpp.o -c /home/saanders/Desktop/MC937/MC937-animation/AABB.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/collision.dir/AABB.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/collision.dir/AABB.cpp.o -MF CMakeFiles/collision.dir/AABB.cpp.o.d -o CMakeFiles/collision.dir/AABB.cpp.o -c /home/thigs/Documentos/MC937-animation/AABB.cpp
 
 CMakeFiles/collision.dir/AABB.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/collision.dir/AABB.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/saanders/Desktop/MC937/MC937-animation/AABB.cpp > CMakeFiles/collision.dir/AABB.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/thigs/Documentos/MC937-animation/AABB.cpp > CMakeFiles/collision.dir/AABB.cpp.i
 
 CMakeFiles/collision.dir/AABB.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/collision.dir/AABB.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/saanders/Desktop/MC937/MC937-animation/AABB.cpp -o CMakeFiles/collision.dir/AABB.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/thigs/Documentos/MC937-animation/AABB.cpp -o CMakeFiles/collision.dir/AABB.cpp.s
 
 # Object files for target collision
 collision_OBJECTS = \
@@ -93,7 +93,7 @@ collision_EXTERNAL_OBJECTS =
 libcollision.a: CMakeFiles/collision.dir/AABB.cpp.o
 libcollision.a: CMakeFiles/collision.dir/build.make
 libcollision.a: CMakeFiles/collision.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libcollision.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libcollision.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/collision.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/collision.dir/link.txt --verbose=$(VERBOSE)
 
@@ -106,6 +106,6 @@ CMakeFiles/collision.dir/clean:
 .PHONY : CMakeFiles/collision.dir/clean
 
 CMakeFiles/collision.dir/depend:
-	cd /home/saanders/Desktop/MC937/MC937-animation/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/saanders/Desktop/MC937/MC937-animation /home/saanders/Desktop/MC937/MC937-animation /home/saanders/Desktop/MC937/MC937-animation/build /home/saanders/Desktop/MC937/MC937-animation/build /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/collision.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/thigs/Documentos/MC937-animation/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/thigs/Documentos/MC937-animation /home/thigs/Documentos/MC937-animation /home/thigs/Documentos/MC937-animation/build /home/thigs/Documentos/MC937-animation/build /home/thigs/Documentos/MC937-animation/build/CMakeFiles/collision.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/collision.dir/depend
 
