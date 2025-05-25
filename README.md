@@ -25,14 +25,10 @@ Objetivo ler 3 OBJ (Novos objetos podem ser baixados do https://github.com/alecj
 ```bash
 ./build/scene1 ./obj/homer.obj ./obj/homer.obj ./obj/homer.obj
 ```
-```
-```
 **Cena 3** - N objetos são posicionados aleatoriamente entorno do centro e estão sujeitos a uma força de retoção (tornado), deixando evidente o impacto entre os n objetos
 
 ```bash
 ./build/scene3 ./OBJ/homer.obj 1000
-```
-```
 ```
 
 Cada cena tem seus frame salvos na pasta *frames* e em cada respectiva cena com nome *scene*
