@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/thigs/Documentos/MC937-animation
+CMAKE_SOURCE_DIR = /home/saanders/Desktop/MC937/MC937-animation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/thigs/Documentos/MC937-animation/build
+CMAKE_BINARY_DIR = /home/saanders/Desktop/MC937/MC937-animation/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -89,14 +89,14 @@ clean: CMakeFiles/scene3.dir/clean
 CMakeFiles/collision.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=1,2 "Built target collision"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=1,2 "Built target collision"
 .PHONY : CMakeFiles/collision.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/collision.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/collision.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
 .PHONY : CMakeFiles/collision.dir/rule
 
 # Convenience name for target.
@@ -115,14 +115,14 @@ CMakeFiles/collision.dir/clean:
 CMakeFiles/physics.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=3,4 "Built target physics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=3,4 "Built target physics"
 .PHONY : CMakeFiles/physics.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/physics.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/physics.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
 .PHONY : CMakeFiles/physics.dir/rule
 
 # Convenience name for target.
@@ -142,14 +142,14 @@ CMakeFiles/scene1.dir/all: CMakeFiles/collision.dir/all
 CMakeFiles/scene1.dir/all: CMakeFiles/physics.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene1.dir/build.make CMakeFiles/scene1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=5,6 "Built target scene1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=5,6 "Built target scene1"
 .PHONY : CMakeFiles/scene1.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/scene1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/scene1.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
 .PHONY : CMakeFiles/scene1.dir/rule
 
 # Convenience name for target.
@@ -169,14 +169,14 @@ CMakeFiles/scene2.dir/all: CMakeFiles/collision.dir/all
 CMakeFiles/scene2.dir/all: CMakeFiles/physics.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene2.dir/build.make CMakeFiles/scene2.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene2.dir/build.make CMakeFiles/scene2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=7,8 "Built target scene2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=7,8 "Built target scene2"
 .PHONY : CMakeFiles/scene2.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/scene2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/scene2.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
 .PHONY : CMakeFiles/scene2.dir/rule
 
 # Convenience name for target.
@@ -196,14 +196,14 @@ CMakeFiles/scene3.dir/all: CMakeFiles/collision.dir/all
 CMakeFiles/scene3.dir/all: CMakeFiles/physics.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene3.dir/build.make CMakeFiles/scene3.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene3.dir/build.make CMakeFiles/scene3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=9,10 "Built target scene3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=9,10 "Built target scene3"
 .PHONY : CMakeFiles/scene3.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/scene3.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/scene3.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
 .PHONY : CMakeFiles/scene3.dir/rule
 
 # Convenience name for target.

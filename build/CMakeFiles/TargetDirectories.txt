@@ -1,7 +1,7 @@
-/home/thigs/Documentos/MC937-animation/build/CMakeFiles/collision.dir
-/home/thigs/Documentos/MC937-animation/build/CMakeFiles/physics.dir
-/home/thigs/Documentos/MC937-animation/build/CMakeFiles/scene1.dir
-/home/thigs/Documentos/MC937-animation/build/CMakeFiles/scene2.dir
-/home/thigs/Documentos/MC937-animation/build/CMakeFiles/scene3.dir
-/home/thigs/Documentos/MC937-animation/build/CMakeFiles/edit_cache.dir
-/home/thigs/Documentos/MC937-animation/build/CMakeFiles/rebuild_cache.dir
+/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/collision.dir
+/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/physics.dir
+/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/scene1.dir
+/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/scene2.dir
+/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/scene3.dir
+/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/edit_cache.dir
+/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/rebuild_cache.dir

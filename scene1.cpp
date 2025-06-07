@@ -35,6 +35,7 @@ void updatePhysics(PhysObj& obj1, double dt) {
     // Atualiza a posição do PhysObj com a posição do homer (sincroniza)
     obj1.position = homer.position;
     obj1.vy = static_cast<float>(homer.velocity.y);
+    //PERGUNTA: Aparentemente nao esta mais acelerando com a gravidade
 
     // Translada a AABB para o espaço de mundo
     AABB world_box = obj1.bbox;
@@ -143,8 +144,10 @@ const char* vertex_shader_src = R"(
 const char* fragment_shader_src = R"(
 #version 330 core
   out vec4 fragColor;
+  uniform vec4 uColor;
+
   void main() {
-      fragColor = vec4(1.0, 0.6, 0.2, 1.0);
+      fragColor = uColor;
   }
 )";
 
@@ -203,35 +206,59 @@ int main(int argc, char** argv) {
     glAttachShader(shaderProgram, vs);
     glAttachShader(shaderProgram, fs);
     glLinkProgram(shaderProgram);
+
+    GLuint ColorLoc = glGetUniformLocation(shaderProgram, "uColor");
+
     glUseProgram(shaderProgram);
 
     GLuint modelLoc = glGetUniformLocation(shaderProgram, "model");
     GLuint viewLoc  = glGetUniformLocation(shaderProgram, "view");
     GLuint projLoc  = glGetUniformLocation(shaderProgram, "projection");
 
-    glm::mat4 view = glm::lookAt(glm::vec3(9.0f, 9.0f, 9.0f),
+    glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 8.0f, 15.0f),
                                  glm::vec3(0.0f, 0.0f, 0.0f),
                                  glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f),
                                             800.0f / 600.0f,
                                             0.1f, 100.0f);
 
-    for (int frame = 0; frame < 300; ++frame) {
+
+std::vector<glm::vec3> groundVerts = {
+    { -10.0f, 0.0f, -10.0f },  // X,    Y=0,  Z
+    {  10.0f, 0.0f, -10.0f },
+    {  10.0f, 0.0f,  10.0f },
+    { -10.0f, 0.0f, -10.0f },
+    {  10.0f, 0.0f,  10.0f },
+    { -10.0f, 0.0f,  10.0f }
+};
+
+    GLuint groundVAO = createVAO(groundVerts);
+
+    for (int frame = 0; frame < 100; ++frame) {
         std::cout << "Creating frame number: " << frame << std::endl;
 
         // Atualiza física com delta time 0.1s
         updatePhysics(obj1, 0.1);
 
         // Render
-        glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
+        glClearColor(0.529f, 0.808f, 0.922f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
         glUniformMatrix4fv(viewLoc,  1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
+
+        glm::mat4 modelGround = glm::mat4(1.0f);              
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelGround));
+        glUniform4f(ColorLoc, 0.0f, 1.0f, 0.0f, 1.0f); // Cor verde para o chão
+        glBindVertexArray(groundVAO);
+        glDrawArrays(GL_TRIANGLES, 0, groundVerts.size());
+
+        // Desenha o objeto (ex: vermelho)
         glm::mat4 model1 = glm::translate(glm::mat4(1.0f), obj1.position);
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model1));
+        glUniform4f(ColorLoc, 1.0f, 0.0f, 0.0f, 1.0f); // Nova cor (ex: vermelho) para obj1
         glBindVertexArray(VAO1);
         glDrawArrays(GL_TRIANGLES, 0, verts1.size());
 

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/thigs/Documentos/MC937-animation
+CMAKE_SOURCE_DIR = /home/saanders/Desktop/MC937/MC937-animation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/thigs/Documentos/MC937-animation/build
+CMAKE_BINARY_DIR = /home/saanders/Desktop/MC937/MC937-animation/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/physics.dir/depend.make
@@ -72,16 +72,16 @@ include CMakeFiles/physics.dir/flags.make
 CMakeFiles/physics.dir/physics.cpp.o: CMakeFiles/physics.dir/flags.make
 CMakeFiles/physics.dir/physics.cpp.o: ../physics.cpp
 CMakeFiles/physics.dir/physics.cpp.o: CMakeFiles/physics.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/physics.dir/physics.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/physics.dir/physics.cpp.o -MF CMakeFiles/physics.dir/physics.cpp.o.d -o CMakeFiles/physics.dir/physics.cpp.o -c /home/thigs/Documentos/MC937-animation/physics.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/physics.dir/physics.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/physics.dir/physics.cpp.o -MF CMakeFiles/physics.dir/physics.cpp.o.d -o CMakeFiles/physics.dir/physics.cpp.o -c /home/saanders/Desktop/MC937/MC937-animation/physics.cpp
 
 CMakeFiles/physics.dir/physics.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/physics.dir/physics.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/thigs/Documentos/MC937-animation/physics.cpp > CMakeFiles/physics.dir/physics.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/saanders/Desktop/MC937/MC937-animation/physics.cpp > CMakeFiles/physics.dir/physics.cpp.i
 
 CMakeFiles/physics.dir/physics.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/physics.dir/physics.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/thigs/Documentos/MC937-animation/physics.cpp -o CMakeFiles/physics.dir/physics.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/saanders/Desktop/MC937/MC937-animation/physics.cpp -o CMakeFiles/physics.dir/physics.cpp.s
 
 # Object files for target physics
 physics_OBJECTS = \
@@ -93,7 +93,7 @@ physics_EXTERNAL_OBJECTS =
 libphysics.a: CMakeFiles/physics.dir/physics.cpp.o
 libphysics.a: CMakeFiles/physics.dir/build.make
 libphysics.a: CMakeFiles/physics.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/thigs/Documentos/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libphysics.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libphysics.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/physics.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/physics.dir/link.txt --verbose=$(VERBOSE)
 
@@ -106,6 +106,6 @@ CMakeFiles/physics.dir/clean:
 .PHONY : CMakeFiles/physics.dir/clean
 
 CMakeFiles/physics.dir/depend:
-	cd /home/thigs/Documentos/MC937-animation/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/thigs/Documentos/MC937-animation /home/thigs/Documentos/MC937-animation /home/thigs/Documentos/MC937-animation/build /home/thigs/Documentos/MC937-animation/build /home/thigs/Documentos/MC937-animation/build/CMakeFiles/physics.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/saanders/Desktop/MC937/MC937-animation/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/saanders/Desktop/MC937/MC937-animation /home/saanders/Desktop/MC937/MC937-animation /home/saanders/Desktop/MC937/MC937-animation/build /home/saanders/Desktop/MC937/MC937-animation/build /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/physics.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/physics.dir/depend
 

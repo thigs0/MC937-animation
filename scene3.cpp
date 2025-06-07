@@ -30,7 +30,8 @@ struct PhysObj {
     float     vy;
     AABB      bbox;      // bounding box em espaço local
 };
-
+// TO DO: Add -> Forca que puxe para o centro
+// TO DO: Fazer com que ambos tenham o mesmo chao
 // Atualiza a física individualmente para cada PhysObj e seu respectivo PhysicalObject
 void updatePhysics(PhysObj& obj1, PhysicalObject& physObj, double dt) {
   glm::vec3 tornadoCenter  = {0.0,0.0,0.0};
@@ -209,19 +210,24 @@ int main(int argc, char** argv) {
     std::vector<PhysicalObject> físicos(nObjetos);
     std::vector<PhysObj> objetos(nObjetos);
 
+    // Para cada objeto
     for (int i = 0; i < nObjetos; ++i) {
+        //Define um posicao inicial aleatoria
         float x = static_cast<float>(rand() % 1000 - 500) / 100.0f; // -5 a 5
         float z = static_cast<float>(rand() % 1000 - 500) / 100.0f;
         float y = 2.0f + static_cast<float>(rand() % 300) / 100.0f; // 2 a 5
 
+        //Define as propriedades fisicas
         físicos[i].mass = 20.0 + (rand() % 100) / 10.0;
         físicos[i].position = glm::dvec3(x, y, z);
         físicos[i].velocity = glm::dvec3(0.0);
 
+        //define o objeto como instancia de PhysObj
         objetos[i] = { glm::vec3(físicos[i].position), 0.0f, bbox };
     }
 
-    for (int frame = 0; frame < 300; ++frame) {
+    for (int frame = 0; frame < 50; ++frame) {
+
         std::cout << "Frame " << frame << "\n";
 
         glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
@@ -232,6 +238,7 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
         for (int i = 0; i < nObjetos; ++i) {
+
             updatePhysics(objetos[i], físicos[i], 0.01);
 
             glm::mat4 model = glm::translate(glm::mat4(1.0f), objetos[i].position);
