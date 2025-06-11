@@ -15,13 +15,27 @@
 #include <iomanip>
 #include <algorithm>
 #include <filesystem>
+#include <map>
 
 #include "AABB.hpp"
 #include "physics.hpp"  // Deve conter PhysicalObject e update_ambient_forces()
 #include "hpp/obj_loader.hpp"
+#include "materials.hpp" //predefinição de alguns materiais
+
 
 // Objeto físico global
 PhysicalObject homer;
+std::map<std::string, Material> materials; //mapa de cor
+Material m = gold; // mapa de cor do ouro
+std::vector<glm::vec3> vertices, normals; //iremos armazenar as normais
+std::vector<Face> faces; //iremos armazenas as faces
+glm::vec3 lightPos(5, 5, 5), lightColor(1, 1, 1); //cor branca global
+//viewport
+int WIDTH = 800;
+int HEIGHT = 600;
+struct Pixel {
+    unsigned char r, g, b;
+};
 
 struct PhysObj {
     glm::vec3 position;
