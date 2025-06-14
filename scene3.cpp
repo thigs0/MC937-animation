@@ -30,6 +30,7 @@ glm::vec3 origin = glm::vec3(0.0f, 0.0f, 0.0f); // defina o centro do tornado co
 double deltaTime = 0.016; // ou o valor real do seu timestep/frame
 
 float dt = 0.1; //variação de tempo
+int mframe = 300;
 Material m = gold; // mapa de cor do ouro
 glm::vec3 lightPos(5, 10, 5), lightColor(1, 0.1, 1); //cor branca global
 //viewport
@@ -41,7 +42,7 @@ struct Pixel {
     unsigned char r, g, b;
 };
 //configurações da câmera
-glm::vec3 cameraPos   = glm::vec3(10.0f, 20.0f, 5.0f);
+glm::vec3 cameraPos   = glm::vec3(10.0f, 20.0f, 10.0f);
 glm::vec3 cameraTarget= glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -78,12 +79,21 @@ struct PhysObj {
     AABB      bbox;      // bounding box em espaço local
 };
 
-void updatePhysics(PhysObj& obj1, double dt) {
-    update_ambient_forces(&homer, dt);
+void updatePhysics(PhysObj& obj1, double dt, PhysicalObject *homer) {
+    std::cout << "Homer before: ("
+            << homer->position.x << ", "
+            << homer->position.y << ", "
+            << homer->position.z << ")\n";
+    applyTornadoForce(homer, origin, dt);
+    homer->position += homer->velocity * dt;
+    std::cout << "Homer after: ("
+            << homer->position.x << ", "
+            << homer->position.y << ", "
+            << homer->position.z << ")\n";
 
     // Atualiza a posição do PhysObj com a posição do homer (sincroniza)
-    obj1.position = homer.position;
-    obj1.vy = static_cast<float>(homer.velocity.y);
+    obj1.position = homer->position;
+    obj1.vy = static_cast<float>(homer->velocity.y);
     //PERGUNTA: Aparentemente nao esta mais acelerando com a gravidade
 
     // Translada a AABB para o espaço de mundo
@@ -98,17 +108,17 @@ void updatePhysics(PhysObj& obj1, double dt) {
         obj1.position.y += penetration;
 
         // Atualiza o objeto homer também
-        homer.position.y += penetration;
-        if (homer.velocity.y < 0)
-            homer.velocity.y = -homer.velocity.y * 0.8;
+        homer->position.y += penetration;
+        if (homer->velocity.y < 0)
+            homer->velocity.y = -homer->velocity.y * 0.8;
 
         // Recalcula a AABB após ajuste
         world_box.min_corner.y += penetration;
         world_box.max_corner.y += penetration;
 
         // Zera a velocidade vertical se muito pequena
-        if (std::abs(homer.velocity.y) < 0.1f) {
-            homer.velocity.y = 0.0;
+        if (std::abs(homer->velocity.y) < 0.1f) {
+            homer->velocity.y = 0.0;
             obj1.vy = 0.0f;
         }
     }
@@ -315,12 +325,12 @@ int main(int argc, char** argv) {
     // Inicializa objetos físicos
     std::vector<PhysicalObject> físicos(nObjetos);
 
-    for (int frame = 0; frame < 50; ++frame) {
+    for (int frame=0; frame < mframe; ++frame) {
 
         std::cout << "Frame " << frame << "\n";
 
         for (int i = 0; i < nObjetos; ++i) {
-            updatePhysics(objboxs[i], dt);
+            updatePhysics(objboxs[i], dt, &objetos[i]);
             objetos[i].position = objboxs[i].position;//sincroniza box com objeto
             std::cout << "Homer position: ("
             << objetos[i].position.x << ", "

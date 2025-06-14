@@ -4,6 +4,8 @@
 #include <map>
 #include <vector>
 #include "hpp/physics.hpp"
+#include <cmath>
+#include <string>
 
 // Usando glm::vec3 para vetores 3D
 using Vec3 = glm::dvec3;  // double precision vec3
@@ -11,6 +13,9 @@ using Vec3 = glm::dvec3;  // double precision vec3
 const double AIR_DENSITY = 1.225;
 const Vec3 G = Vec3(0.0, -9.81, 0.0);
 
+struct Face {
+    int v1, v2, v3;
+};
 void update_ambient_forces(PhysicalObject* obj, double dt) {
     Vec3 gforce = G * obj->mass;
 
@@ -71,4 +76,57 @@ void applyTornadoForce(PhysicalObject* obj, glm::vec3 center, double dt) {
     }
 }
 
+/// Cria uma malha de tecido e armazena em obj
+void createCloth(PhysicalObject* obj, int n_faces) {
+    if (!obj || n_faces <= 0) return;
+
+    // Limpa qualquer dado anterior
+    obj->vertices.clear();
+    obj->normals.clear();
+    obj->faces.clear();
+    obj->materials.clear();
+
+    // Calcular dimensões do grid a partir de n_faces (2 triângulos por quadrado)
+    int quads = n_faces / 2;
+    int grid_size = std::sqrt(quads);
+    if (grid_size * grid_size != quads) {
+        // Ajusta para próximo valor quadrado se necessário
+        grid_size = std::ceil(std::sqrt(quads));
+    }
+
+    float spacing = 1.0f;
+
+    // Gerar vértices: grid (grid_size + 1) x (grid_size + 1)
+    for (int y = 0; y <= grid_size; ++y) {
+        for (int x = 0; x <= grid_size; ++x) {
+            glm::vec3 position = glm::vec3(x * spacing, 0.0f, y * spacing);
+            obj->vertices.push_back(position);
+            obj->normals.push_back(glm::vec3(0, 1, 0));  // Normais iniciais para cima
+        }
+    }
+
+    // Gerar faces (2 triângulos por quadrado)
+    for (int y = 0; y < grid_size; ++y) {
+        for (int x = 0; x < grid_size; ++x) {
+            int i = y * (grid_size + 1) + x;
+            int i_right = i + 1;
+            int i_down = i + (grid_size + 1);
+            int i_diag = i_down + 1;
+
+            // Triângulo 1
+            obj->faces.push_back({i, i_right, i_down});
+            // Triângulo 2
+            obj->faces.push_back({i_right, i_diag, i_down});
+        }
+    }
+
+    // Define material básico
+    Material clothMaterial;
+    clothMaterial.ambient = glm::vec3(0.2f, 0.2f, 0.2f);
+    clothMaterial.diffuse = glm::vec3(0.7f, 0.7f, 0.9f);
+    clothMaterial.specular = glm::vec3(0.1f, 0.1f, 0.1f);
+    clothMaterial.shininess = 16.0f;
+
+    obj->materials["cloth"] = clothMaterial;
+}
 

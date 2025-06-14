@@ -37,5 +37,6 @@ struct PhysicalObject {
 
 void update_ambient_forces(PhysicalObject* obj, double dt);
 void applyTornadoForce(PhysicalObject* obj, glm::vec3 center, double dt);
+void createCloth(PhysicalObject* obj, int n_faces);
 
 #endif // PHYSICS_HPP
