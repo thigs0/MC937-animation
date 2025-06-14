@@ -8,13 +8,15 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/saanders/Desktop/MC937/MC937-animation/scene2.cpp" "CMakeFiles/scene2.dir/scene2.cpp.o" "gcc" "CMakeFiles/scene2.dir/scene2.cpp.o.d"
+  "/home/thigs/Documentos/MC937-animation/scene2.cpp" "CMakeFiles/scene2.dir/scene2.cpp.o" "gcc" "CMakeFiles/scene2.dir/scene2.cpp.o.d"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/collision.dir/DependInfo.cmake"
-  "/home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles/physics.dir/DependInfo.cmake"
+  "/home/thigs/Documentos/MC937-animation/build/CMakeFiles/collision.dir/DependInfo.cmake"
+  "/home/thigs/Documentos/MC937-animation/build/CMakeFiles/physics.dir/DependInfo.cmake"
+  "/home/thigs/Documentos/MC937-animation/build/CMakeFiles/raycast.dir/DependInfo.cmake"
+  "/home/thigs/Documentos/MC937-animation/build/CMakeFiles/loader.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

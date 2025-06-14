@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/saanders/Desktop/MC937/MC937-animation
+CMAKE_SOURCE_DIR = /home/thigs/Documentos/MC937-animation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/saanders/Desktop/MC937/MC937-animation/build
+CMAKE_BINARY_DIR = /home/thigs/Documentos/MC937-animation/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles /home/saanders/Desktop/MC937/MC937-animation/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles /home/thigs/Documentos/MC937-animation/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/saanders/Desktop/MC937/MC937-animation/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thigs/Documentos/MC937-animation/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -141,6 +141,32 @@ physics: cmake_check_build_system
 physics/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/build
 .PHONY : physics/fast
+
+#=============================================================================
+# Target rules for targets named raycast
+
+# Build rule for target.
+raycast: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 raycast
+.PHONY : raycast
+
+# fast build rule for target.
+raycast/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raycast.dir/build.make CMakeFiles/raycast.dir/build
+.PHONY : raycast/fast
+
+#=============================================================================
+# Target rules for targets named loader
+
+# Build rule for target.
+loader: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 loader
+.PHONY : loader
+
+# fast build rule for target.
+loader/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/loader.dir/build.make CMakeFiles/loader.dir/build
+.PHONY : loader/fast
 
 #=============================================================================
 # Target rules for targets named scene1
@@ -205,6 +231,30 @@ AABB.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/collision.dir/build.make CMakeFiles/collision.dir/AABB.cpp.s
 .PHONY : AABB.cpp.s
 
+obj_loader.o: obj_loader.cpp.o
+.PHONY : obj_loader.o
+
+# target to build an object file
+obj_loader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/loader.dir/build.make CMakeFiles/loader.dir/obj_loader.cpp.o
+.PHONY : obj_loader.cpp.o
+
+obj_loader.i: obj_loader.cpp.i
+.PHONY : obj_loader.i
+
+# target to preprocess a source file
+obj_loader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/loader.dir/build.make CMakeFiles/loader.dir/obj_loader.cpp.i
+.PHONY : obj_loader.cpp.i
+
+obj_loader.s: obj_loader.cpp.s
+.PHONY : obj_loader.s
+
+# target to generate assembly for a file
+obj_loader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/loader.dir/build.make CMakeFiles/loader.dir/obj_loader.cpp.s
+.PHONY : obj_loader.cpp.s
+
 physics.o: physics.cpp.o
 .PHONY : physics.o
 
@@ -228,6 +278,30 @@ physics.s: physics.cpp.s
 physics.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/physics.dir/build.make CMakeFiles/physics.dir/physics.cpp.s
 .PHONY : physics.cpp.s
+
+raycast.o: raycast.cpp.o
+.PHONY : raycast.o
+
+# target to build an object file
+raycast.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raycast.dir/build.make CMakeFiles/raycast.dir/raycast.cpp.o
+.PHONY : raycast.cpp.o
+
+raycast.i: raycast.cpp.i
+.PHONY : raycast.i
+
+# target to preprocess a source file
+raycast.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raycast.dir/build.make CMakeFiles/raycast.dir/raycast.cpp.i
+.PHONY : raycast.cpp.i
+
+raycast.s: raycast.cpp.s
+.PHONY : raycast.s
+
+# target to generate assembly for a file
+raycast.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/raycast.dir/build.make CMakeFiles/raycast.dir/raycast.cpp.s
+.PHONY : raycast.cpp.s
 
 scene1.o: scene1.cpp.o
 .PHONY : scene1.o
@@ -310,16 +384,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... collision"
+	@echo "... loader"
 	@echo "... physics"
+	@echo "... raycast"
 	@echo "... scene1"
 	@echo "... scene2"
 	@echo "... scene3"
 	@echo "... AABB.o"
 	@echo "... AABB.i"
 	@echo "... AABB.s"
+	@echo "... obj_loader.o"
+	@echo "... obj_loader.i"
+	@echo "... obj_loader.s"
 	@echo "... physics.o"
 	@echo "... physics.i"
 	@echo "... physics.s"
+	@echo "... raycast.o"
+	@echo "... raycast.i"
+	@echo "... raycast.s"
 	@echo "... scene1.o"
 	@echo "... scene1.i"
 	@echo "... scene1.s"

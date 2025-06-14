@@ -1,6 +1,8 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <fstream>
+#include "hpp/raycast.hpp"
+#include <glm/glm.hpp>
 
 //intersecção raio triãngulo
 bool rayTriangleIntersect(const glm::vec3& orig, const glm::vec3& d,

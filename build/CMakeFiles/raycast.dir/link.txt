@@ -1,0 +1,2 @@
+/usr/bin/ar qc libraycast.a CMakeFiles/raycast.dir/raycast.cpp.o
+/usr/bin/ranlib libraycast.a

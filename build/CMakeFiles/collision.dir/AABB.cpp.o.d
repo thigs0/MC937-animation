@@ -1,5 +1,5 @@
 CMakeFiles/collision.dir/AABB.cpp.o: \
- /home/saanders/Desktop/MC937/MC937-animation/AABB.cpp \
+ /home/thigs/Documentos/MC937-animation/AABB.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -341,7 +341,7 @@ CMakeFiles/collision.dir/AABB.cpp.o: \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/saanders/Desktop/MC937/MC937-animation/hpp/AABB.hpp \
+ /home/thigs/Documentos/MC937-animation/hpp/AABB.hpp \
  /usr/include/c++/11/algorithm /usr/include/c++/11/bits/ranges_algo.h \
  /usr/include/c++/11/bits/ranges_util.h \
  /usr/include/c++/11/pstl/glue_algorithm_defs.h \

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/saanders/Desktop/MC937/MC937-animation/physics.cpp" "CMakeFiles/physics.dir/physics.cpp.o" "gcc" "CMakeFiles/physics.dir/physics.cpp.o.d"
+  "/home/thigs/Documentos/MC937-animation/physics.cpp" "CMakeFiles/physics.dir/physics.cpp.o" "gcc" "CMakeFiles/physics.dir/physics.cpp.o.d"
   )
 
 # Targets to which this target links.

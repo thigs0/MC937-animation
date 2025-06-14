@@ -15,106 +15,129 @@
 #include <iomanip>
 #include <algorithm>
 #include <filesystem>
+#include <random>
 
 #include "AABB.hpp"
 #include "physics.hpp"  // Deve conter PhysicalObject e update_ambient_forces()
 #include "hpp/obj_loader.hpp"
+#include "hpp/raycast.hpp" //implementação do raycast
+#include "hpp/materials.hpp" //predefinição de alguns materiais
 
-// Objetos físicos globais
 PhysicalObject homer;
-PhysicalObject h2;
-PhysicalObject h3;
+PhysicalObject ground;
 
+glm::vec3 origin = glm::vec3(0.0f, 0.0f, 0.0f); // defina o centro do tornado conforme necessário
+double deltaTime = 0.016; // ou o valor real do seu timestep/frame
+
+float dt = 0.1; //variação de tempo
+Material m = gold; // mapa de cor do ouro
+glm::vec3 lightPos(5, 10, 5), lightColor(1, 0.1, 1); //cor branca global
+//viewport
+int width = 800;
+int height = 600;
+
+
+struct Pixel {
+    unsigned char r, g, b;
+};
+//configurações da câmera
+glm::vec3 cameraPos   = glm::vec3(10.0f, 20.0f, 5.0f);
+glm::vec3 cameraTarget= glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
+
+glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+
+float aspect = static_cast<float>(width) / static_cast<float>(height);
+glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
+
+
+// Dimensões do plano da câmera
+float imagePlaneWidth = 2.0f;  // Ajuste conforme FOV e aspect ratio
+float imagePlaneHeight = 1.5f; // Idem
+
+//glm::vec3 eye = glm::vec3(0.0f, 8.0f, 15.0f);
+glm::vec3 forward = glm::normalize(glm::vec3(0.0f, 0.0f, 0.0f) - cameraPos);
+glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0.0f, 1.0f, 0.0f)));
+glm::vec3 camUp = glm::cross(right, forward);
+
+//ground variables
+
+std::vector<glm::vec3> groundVerts = {
+        { -10.0f, 0.0f, -10.0f },  // X,    Y=0,  Z
+        {  10.0f, 0.0f, -10.0f },
+        {  10.0f, 0.0f,  10.0f },
+        { -10.0f, 0.0f, -10.0f },
+        {  10.0f, 0.0f,  10.0f },
+        { -10.0f, 0.0f,  10.0f }
+    };
+std::vector<glm::vec3> groundNormals(groundVerts.size(), glm::vec3(0.0f, 1.0f, 0.0f));
+//---------------------------------------------------------------------------------------------------------------------------------
 struct PhysObj {
     glm::vec3 position;
     float     vy;
     AABB      bbox;      // bounding box em espaço local
 };
-// TO DO: Add -> Forca que puxe para o centro
-// TO DO: Fazer com que ambos tenham o mesmo chao
-// Atualiza a física individualmente para cada PhysObj e seu respectivo PhysicalObject
-void updatePhysics(PhysObj& obj1, PhysicalObject& physObj, double dt) {
-  glm::vec3 tornadoCenter  = {0.0,0.0,0.0};
-    update_ambient_forces(&physObj, dt);
-    applyTornadoForce(&physObj, tornadoCenter, dt);
 
-    obj1.position = glm::vec3(physObj.position);
-    obj1.vy = static_cast<float>(physObj.velocity.y);
+void updatePhysics(PhysObj& obj1, double dt) {
+    update_ambient_forces(&homer, dt);
 
+    // Atualiza a posição do PhysObj com a posição do homer (sincroniza)
+    obj1.position = homer.position;
+    obj1.vy = static_cast<float>(homer.velocity.y);
+    //PERGUNTA: Aparentemente nao esta mais acelerando com a gravidade
+
+    // Translada a AABB para o espaço de mundo
     AABB world_box = obj1.bbox;
     world_box.min_corner += obj1.position;
     world_box.max_corner += obj1.position;
 
-    // Colisão chão
+    // Teste de colisão com o chão (y=0)
     if (world_box.min_corner.y < 0.0f) {
+        // Ajusta position para que a caixa fique encostada no chão
         float penetration = -world_box.min_corner.y;
         obj1.position.y += penetration;
-        physObj.position.y += penetration;
-        if (physObj.velocity.y < 0)
-            physObj.velocity.y = -physObj.velocity.y * 0.8;
 
+        // Atualiza o objeto homer também
+        homer.position.y += penetration;
+        if (homer.velocity.y < 0)
+            homer.velocity.y = -homer.velocity.y * 0.8;
+
+        // Recalcula a AABB após ajuste
         world_box.min_corner.y += penetration;
         world_box.max_corner.y += penetration;
 
-        if (std::abs(physObj.velocity.y) < 0.1f) {
-            physObj.velocity.y = 0.0;
+        // Zera a velocidade vertical se muito pequena
+        if (std::abs(homer.velocity.y) < 0.1f) {
+            homer.velocity.y = 0.0;
             obj1.vy = 0.0f;
         }
     }
 }
 
-GLuint createVAO(const std::vector<glm::vec3>& vertices) {
-    GLuint VAO, VBO;
+GLuint createVAO(const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals) {
+    GLuint VAO, VBOs[2];
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    glGenBuffers(2, VBOs);
 
     glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+    // Vértices
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glEnableVertexAttribArray(0);
 
+    // Normais — agora usa o parâmetro 'normals' passado corretamente!
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), normals.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
     return VAO;
 }
 
-// OBJ loader simples (igual ao original)
-bool loadSimpleOBJ(const std::string& filename, std::vector<glm::vec3>& out_vertices) {
-    std::ifstream file(filename);
-    if (!file.is_open()) {
-        std::cerr << "Erro ao abrir arquivo: " << filename << std::endl;
-        return false;
-    }
 
-    std::vector<glm::vec3> temp_vertices;
-    std::vector<unsigned int> vertexIndices;
-
-    std::string line;
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        std::string prefix;
-        iss >> prefix;
-        if (prefix == "v") {
-            glm::vec3 vertex;
-            iss >> vertex.x >> vertex.y >> vertex.z;
-            temp_vertices.push_back(vertex);
-        } else if (prefix == "f") {
-            unsigned int vi1;
-            std::string vert;
-            for (int i = 0; i < 3; i++) {
-                iss >> vert;
-                std::replace(vert.begin(), vert.end(), '/', ' ');
-                std::istringstream viss(vert);
-                viss >> vi1;
-                vertexIndices.push_back(vi1 - 1);
-            }
-        }
-    }
-
-    for (unsigned int idx : vertexIndices) {
-        out_vertices.push_back(temp_vertices[idx]);
-    }
-    return true;
-}
 
 GLuint compileShader(GLenum type, const char* src) {
     GLuint shader = glCreateShader(type);
@@ -123,24 +146,88 @@ GLuint compileShader(GLenum type, const char* src) {
     return shader;
 }
 
+glm::vec3 computeColor(const glm::vec3& point, const glm::vec3& normal,
+                       const glm::vec3& lightPos, const glm::vec3& lightColor,
+                       const Material& mat) {
+    glm::vec3 ambient = mat.ambient * lightColor;
+    glm::vec3 L = glm::normalize(lightPos - point);
+    glm::vec3 N = glm::normalize(normal);
+    glm::vec3 diffuse = mat.diffuse * glm::max(glm::dot(N, L), 0.0f) * lightColor;
+    glm::vec3 V = glm::normalize(-point);
+    glm::vec3 R = glm::reflect(-L, N);
+    glm::vec3 specular = mat.specular * pow(glm::max(glm::dot(R, V), 0.0f), mat.shininess) * lightColor;
+    return ambient + diffuse + specular;
+}
+
+
+float getMinY(const std::vector<glm::vec3>& verts) {
+    float minY = verts[0].y;
+    for (const auto& v : verts) {
+        if (v.y < minY) minY = v.y;
+    }
+    return minY;
+}
 const char* vertex_shader_src = R"(
 #version 330 core
-layout (location = 0) in vec3 position;
+layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec3 aNormal;
+
+out vec3 FragPos;
+out vec3 Normal;
+
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+
 void main() {
-    gl_Position = projection * view * model * vec4(position, 1.0);
+    FragPos = vec3(model * vec4(aPos, 1.0));
+    Normal = mat3(transpose(inverse(model))) * aNormal;  
+    gl_Position = projection * view * vec4(FragPos, 1.0);
 }
+
 )";
 
 const char* fragment_shader_src = R"(
 #version 330 core
-out vec4 fragColor;
+out vec4 FragColor;
+
+in vec3 FragPos;
+in vec3 Normal;
+
+uniform vec3 lightPos;
+uniform vec3 viewPos;
+uniform vec3 lightColor;
+uniform vec3 objectColor;
+
 void main() {
-    fragColor = vec4(1.0, 0.6, 0.2, 1.0);
+    float ambientStrength = 0.1;
+    vec3 ambient = ambientStrength * lightColor;
+
+    vec3 norm = normalize(Normal);
+    vec3 lightDir = normalize(lightPos - FragPos);
+    float diff = max(dot(norm, lightDir), 0.0);
+    vec3 diffuse = diff * lightColor;
+
+    float specularStrength = 0.5;
+    vec3 viewDir = normalize(viewPos - FragPos);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+    vec3 specular = specularStrength * spec * lightColor;
+
+    vec3 result = (ambient + diffuse + specular) * objectColor;
+    FragColor = vec4(result, 1.0);
 }
+
 )";
+
+AABB computeAABB(const std::vector<glm::vec3>& vertices) {
+    glm::vec3 minV = vertices[0], maxV = vertices[0];
+    for (const auto& v : vertices) {
+        minV = glm::min(minV, v);
+        maxV = glm::max(maxV, v);
+    }
+    return AABB(minV, maxV);
+}
 
 int main(int argc, char** argv) {
     if (argc < 3) {
@@ -161,7 +248,7 @@ int main(int argc, char** argv) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(width, height, "", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
         return -1;
@@ -173,22 +260,41 @@ int main(int argc, char** argv) {
 
     glEnable(GL_DEPTH_TEST);
 
-    std::vector<glm::vec3> vertices;
-    if (!loadSimpleOBJ(modeloPath, vertices)) {
+    if (!loadOBJ(modeloPath, &homer)) {
         std::cerr << "Falha ao carregar modelo.\n";
         return -1;
     }
 
-    AABB bbox = [&vertices]() {
-        glm::vec3 minV = vertices[0], maxV = vertices[0];
-        for (const auto& v : vertices) {
-            minV = glm::min(minV, v);
-            maxV = glm::max(maxV, v);
-        }
-        return AABB(minV, maxV);
-    }();
+    // Calcula a bounding box do modelo
+    AABB bbox = computeAABB(homer.vertices);
 
-    GLuint VAO = createVAO(vertices);
+    // Gera os nObjetos em posições aleatórias ao redor da origem
+    std::vector<PhysicalObject> objetos;
+    std::vector<PhysObj> objboxs;
+    objetos.reserve(nObjetos);
+    objboxs.reserve(nObjetos);
+
+    glm::vec3 mesh_min = homer.vertices[0], mesh_max = homer.vertices[0];
+    for (auto& v : homer.vertices) {
+        mesh_min = glm::min(mesh_min, v);
+        mesh_max = glm::max(mesh_max, v);
+    }
+    AABB bbox_local(mesh_min, mesh_max);
+    PhysObj obj1 { glm::vec3(-3, 23, 0), 0.0f, bbox_local }; 
+
+
+    std::default_random_engine rng;
+    std::uniform_real_distribution<float> distrib(-10.0f, 10.0f);
+
+    for (int i = 0; i < nObjetos; ++i) {
+        PhysicalObject obj = homer;  // Cópia do objeto
+        obj.position = glm::vec3(distrib(rng), distrib(rng), distrib(rng));
+        PhysObj tbox { obj.position, 0.0f, bbox_local };
+        objetos.push_back(obj);
+        objboxs.push_back(tbox);
+    }
+
+    GLuint VAO = createVAO(homer.vertices, homer.normals);
     GLuint shaderProgram = glCreateProgram();
     GLuint vs = compileShader(GL_VERTEX_SHADER, vertex_shader_src);
     GLuint fs = compileShader(GL_FRAGMENT_SHADER, fragment_shader_src);
@@ -208,56 +314,107 @@ int main(int argc, char** argv) {
 
     // Inicializa objetos físicos
     std::vector<PhysicalObject> físicos(nObjetos);
-    std::vector<PhysObj> objetos(nObjetos);
-
-    // Para cada objeto
-    for (int i = 0; i < nObjetos; ++i) {
-        //Define um posicao inicial aleatoria
-        float x = static_cast<float>(rand() % 1000 - 500) / 100.0f; // -5 a 5
-        float z = static_cast<float>(rand() % 1000 - 500) / 100.0f;
-        float y = 2.0f + static_cast<float>(rand() % 300) / 100.0f; // 2 a 5
-
-        //Define as propriedades fisicas
-        físicos[i].mass = 20.0 + (rand() % 100) / 10.0;
-        físicos[i].position = glm::dvec3(x, y, z);
-        físicos[i].velocity = glm::dvec3(0.0);
-
-        //define o objeto como instancia de PhysObj
-        objetos[i] = { glm::vec3(físicos[i].position), 0.0f, bbox };
-    }
 
     for (int frame = 0; frame < 50; ++frame) {
 
         std::cout << "Frame " << frame << "\n";
 
-        glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glUseProgram(shaderProgram);
-        glUniformMatrix4fv(viewLoc,  1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-
         for (int i = 0; i < nObjetos; ++i) {
-
-            updatePhysics(objetos[i], físicos[i], 0.01);
-
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), objetos[i].position);
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-            glBindVertexArray(VAO);
-            glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+            updatePhysics(objboxs[i], dt);
+            objetos[i].position = objboxs[i].position;//sincroniza box com objeto
+            std::cout << "Homer position: ("
+            << objetos[i].position.x << ", "
+            << objetos[i].position.y << ", "
+            << objetos[i].position.z << ")\n";
         }
 
-        // Salvar frame
-        std::vector<unsigned char> pixels(800 * 600 * 3);
-        glReadPixels(0, 0, 800, 600, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
+        glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
+        glm::vec3 hitColor(0.0f);
+        std::vector<Pixel> framebuffer(width * height);
 
-        for (int y = 0; y < 300; ++y)
-            for (int x = 0; x < 800 * 3; ++x)
-                std::swap(pixels[y * 800 * 3 + x], pixels[(599 - y) * 800 * 3 + x]);
+        glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+        float aspect = static_cast<float>(width) / static_cast<float>(height);
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
+        glm::mat4 invViewProj = glm::inverse(projection * view);
 
+        glm::vec3 eye = cameraPos;
+
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                float ndcX = (2.0f * x) / width - 1.0f;
+                float ndcY = 1.0f - (2.0f * y) / height;
+                glm::vec4 ndc = glm::vec4(ndcX, ndcY, -1.0f, 1.0f);
+                glm::vec4 worldRay4 = invViewProj * ndc;
+                worldRay4 /= worldRay4.w;
+
+                float px = (2.0f * (x + 0.5f) / width - 1.0f) * imagePlaneWidth * 0.5f;
+                float py = (1.0f - 2.0f * (y + 0.5f) / height) * imagePlaneHeight * 0.5f;
+                glm::vec3 pixelPos = cameraPos + forward + px * right + py * camUp;
+                glm::vec3 dir = glm::normalize(pixelPos - cameraPos);
+
+                glm::vec3 rayDir = glm::normalize(glm::vec3(worldRay4) - eye);
+                glm::vec3 rayOrigin = eye;
+
+                float minDist = 1e20f;
+
+                float closestT = 1e30f;
+                glm::vec3 hitPoint, hitNormal;
+                Material hitMat = gold;
+                for (int i = 0; i < nObjetos; ++i) {
+                    const auto& obj = objetos[i];
+                    for (size_t j = 0; j < obj.vertices.size(); j += 3) {
+                        // Vértices do triângulo com transformação de posição do objeto
+                        glm::vec3 v0 = obj.vertices[j + 0]     +  glm::vec3(obj.position);
+                        glm::vec3 v1 = obj.vertices[j + 1] +  glm::vec3(obj.position);
+                        glm::vec3 v2 = obj.vertices[j + 2] +  glm::vec3(obj.position);
+
+                        glm::mat4 model1 = glm::translate(glm::mat4(1.0f), glm::vec3(obj.position));
+                        glm::vec3 v0w = glm::vec3(model1 * glm::vec4(v0, 1.0f));
+                        glm::vec3 v1w = glm::vec3(model1 * glm::vec4(v1, 1.0f));
+                        glm::vec3 v2w = glm::vec3(model1 * glm::vec4(v2, 1.0f));
+
+                        glm::vec3 hitPos, normal;
+                        float t, u, v;
+
+                        if (rayTriangleIntersect(cameraPos, dir, v0w, v1w, v2w, t, u, v)) {
+                            if (t < closestT) {
+                                closestT = t;
+                                hitPoint = cameraPos + dir * t;
+
+                                // Normais interpoladas
+                                glm::vec3 n0 = obj.normals[j];
+                                glm::vec3 n1 = obj.normals[j + 1];
+                                glm::vec3 n2 = obj.normals[j + 2];
+                                hitNormal = glm::normalize((1 - u - v) * n0 + u * n1 + v * n2);
+                            }
+                        }
+                        if (closestT < 1e30f) {
+                            hitMat = gold; // ou bronze, ou silver, se quiser variar
+
+                            hitColor = computeColor(hitPoint, hitNormal, lightPos, lightColor, hitMat);
+                            hitColor = glm::clamp(hitColor, 0.0f, 1.0f);
+                        } else {
+                            hitColor = glm::vec3(0.1f, 0.1f, 0.3f); // cor de fundo
+                        }
+
+                    }
+                }
+
+
+                hitColor = glm::clamp(hitColor, 0.0f, 1.0f);
+                framebuffer[y * width + x] = {
+                    static_cast<unsigned char>(hitColor.r * 255),
+                    static_cast<unsigned char>(hitColor.g * 255),
+                    static_cast<unsigned char>(hitColor.b * 255)
+                };
+            }
+        }
+
+        // Salvar imagem
         std::ostringstream oss;
         oss << "./frame/scene3/" << std::setw(3) << std::setfill('0') << frame << ".png";
-        stbi_write_png(oss.str().c_str(), 800, 600, 3, pixels.data(), 800 * 3);
+        stbi_write_png(oss.str().c_str(), width, height, 3, framebuffer.data(), width * 3);
+
     }
 
     glfwDestroyWindow(window);

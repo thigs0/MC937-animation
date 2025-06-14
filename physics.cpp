@@ -1,20 +1,15 @@
 #include <iostream>
 #include <glm/glm.hpp>
+#include "hpp/materials.hpp" //predefinição de alguns materiais
+#include <map>
+#include <vector>
+#include "hpp/physics.hpp"
 
 // Usando glm::vec3 para vetores 3D
 using Vec3 = glm::dvec3;  // double precision vec3
 
-const Vec3 G = Vec3(0.0, -9.8, 0.0);
 const double AIR_DENSITY = 1.225;
-
-struct PhysicalObject {
-    double mass;                // kg
-    double dragCoefficient;     // adimensional
-    double frontalArea;         // m²
-    
-    Vec3 position;              // m
-    Vec3 velocity;              // m/s
-};
+const Vec3 G = Vec3(0.0, -9.81, 0.0);
 
 void update_ambient_forces(PhysicalObject* obj, double dt) {
     Vec3 gforce = G * obj->mass;
@@ -24,7 +19,6 @@ void update_ambient_forces(PhysicalObject* obj, double dt) {
 
     if (speed > 0.0) {
         Vec3 vhat = glm::normalize(obj->velocity);
-        // Força de arrasto: F = -0.5 * ρ * v² * Cd * A * v̂
         airf = vhat * (-0.5 * AIR_DENSITY * speed * speed * obj->dragCoefficient * obj->frontalArea);
     }
 
@@ -34,6 +28,7 @@ void update_ambient_forces(PhysicalObject* obj, double dt) {
     obj->velocity += acceleration * dt;
     obj->position += obj->velocity * dt;
 }
+
 
 void applyTornadoForce(PhysicalObject* obj, glm::vec3 center, double dt) {
     glm::vec3 pos = glm::vec3(obj->position);

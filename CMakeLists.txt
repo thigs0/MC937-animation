@@ -35,6 +35,9 @@ add_library(collision STATIC
 add_library(physics STATIC
     ${CMAKE_SOURCE_DIR}/physics.cpp
 )
+add_library(raycast STATIC
+    ${CMAKE_SOURCE_DIR}/raycast.cpp
+)
 
 target_include_directories(physics PUBLIC
     ${CMAKE_SOURCE_DIR}/hpp
@@ -42,6 +45,9 @@ target_include_directories(physics PUBLIC
 
 target_include_directories(collision PUBLIC
     ${CMAKE_SOURCE_DIR}/hpp
+)
+add_library(loader STATIC
+    ${CMAKE_SOURCE_DIR}/obj_loader.cpp
 )
 
 # 3) Executável
@@ -65,7 +71,9 @@ target_include_directories(scene1 PRIVATE
 # 4) Linkagem
 target_link_libraries(scene1
     collision
-    physics         # <-- adicione aqui
+    physics
+    raycast
+    loader
     ${OpenCV_LIBS}
     OpenGL::GL
     glfw
@@ -75,6 +83,8 @@ target_link_libraries(scene1
 target_link_libraries(scene2
     collision
     physics
+    raycast
+    loader
     ${OpenCV_LIBS}
     OpenGL::GL
     glfw
@@ -84,6 +94,8 @@ target_link_libraries(scene2
 target_link_libraries(scene3
     collision
     physics
+    raycast
+    loader
     ${OpenCV_LIBS}
     OpenGL::GL
     glfw
