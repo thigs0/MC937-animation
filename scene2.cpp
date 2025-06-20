@@ -76,7 +76,7 @@ struct PhysObj {
 };
 
 void updatePhysics(PhysObj& obj1, double dt, PhysicalObject *homer)  {
-    update_ambient_forces(&homer, dt);
+    update_ambient_forces(homer, dt);
 
     // Atualiza a posição do PhysObj com a posição do homer (sincroniza)
     obj1.position = homer->position;
@@ -257,7 +257,7 @@ int main(int argc, char** argv) {
     std::string objFilename = argv[1];
 
     if (!loadOBJ("./OBJ/out.obj", &box)) {
-        std::cerr << "erro para carregar o arquivo." << std::endl;
+        std::cerr << "erro para carregar o arquivo ./OBJ/out.obj";
         return -1;
     }
     int nfaces = std::atoi(argv[1]);

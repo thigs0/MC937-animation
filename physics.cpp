@@ -13,9 +13,6 @@ using Vec3 = glm::dvec3;  // double precision vec3
 const double AIR_DENSITY = 1.225;
 const Vec3 G = Vec3(0.0, -9.81, 0.0);
 
-struct Face {
-    int v1, v2, v3;
-};
 void update_ambient_forces(PhysicalObject* obj, double dt) {
     Vec3 gforce = G * obj->mass;
 
@@ -114,9 +111,9 @@ void createCloth(PhysicalObject* obj, int n_faces) {
             int i_diag = i_down + 1;
 
             // Triângulo 1
-            obj->faces.push_back({i, i_right, i_down});
-            // Triângulo 2
-            obj->faces.push_back({i_right, i_diag, i_down});
+            obj->faces.push_back(Face({(unsigned int)i, (unsigned int)i_right, (unsigned int)i_down}, {}, "cloth"));
+            obj->faces.push_back(Face({(unsigned int)i_right, (unsigned int)i_diag, (unsigned int)i_down}, {}, "cloth"));
+
         }
     }
 

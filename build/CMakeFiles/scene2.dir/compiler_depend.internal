@@ -476,15 +476,24 @@ CMakeFiles/scene2.dir/scene2.cpp.o
  /usr/include/c++/11/bits/unordered_map.h
  /usr/include/c++/11/bits/erase_if.h
  /usr/include/c++/11/pstl/execution_defs.h
+ /usr/include/c++/11/filesystem
+ /usr/include/c++/11/bits/fs_fwd.h
+ /usr/include/c++/11/chrono
+ /usr/include/c++/11/ratio
+ /usr/include/c++/11/bits/parse_numbers.h
+ /usr/include/c++/11/bits/fs_path.h
+ /usr/include/c++/11/codecvt
+ /usr/include/c++/11/ext/concurrence.h
+ /usr/include/c++/11/bits/shared_ptr.h
+ /usr/include/c++/11/bits/shared_ptr_base.h
+ /usr/include/c++/11/bits/allocated_ptr.h
+ /usr/include/c++/11/bits/fs_dir.h
+ /usr/include/c++/11/bits/fs_ops.h
  /home/thigs/Documentos/MC937-animation/hpp/AABB.hpp
  /usr/include/c++/11/memory
  /usr/include/c++/11/bits/stl_raw_storage_iter.h
  /usr/include/c++/11/bits/align.h
  /usr/include/c++/11/bit
- /usr/include/c++/11/bits/shared_ptr.h
- /usr/include/c++/11/bits/shared_ptr_base.h
- /usr/include/c++/11/bits/allocated_ptr.h
- /usr/include/c++/11/ext/concurrence.h
  /usr/include/c++/11/bits/shared_ptr_atomic.h
  /usr/include/c++/11/bits/atomic_base.h
  /usr/include/c++/11/bits/atomic_lockfree_defines.h
@@ -513,4 +522,7 @@ CMakeFiles/scene2.dir/scene2.cpp.o
  /usr/include/c++/11/bits/stl_tree.h
  /usr/include/c++/11/bits/stl_map.h
  /usr/include/c++/11/bits/stl_multimap.h
+ /home/thigs/Documentos/MC937-animation/hpp/obj_loader.hpp
+ /home/thigs/Documentos/MC937-animation/hpp/physics.hpp
+ /home/thigs/Documentos/MC937-animation/hpp/raycast.hpp
 

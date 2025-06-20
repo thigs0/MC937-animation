@@ -29,8 +29,8 @@ PhysicalObject ground;
 glm::vec3 origin = glm::vec3(0.0f, 0.0f, 0.0f); // defina o centro do tornado conforme necessário
 double deltaTime = 0.016; // ou o valor real do seu timestep/frame
 
-float dt = 0.1; //variação de tempo
-int mframe = 300;
+float dt = 0.0001; //variação de tempo
+int mframe = 3000;
 Material m = gold; // mapa de cor do ouro
 glm::vec3 lightPos(5, 10, 5), lightColor(1, 0.1, 1); //cor branca global
 //viewport
@@ -86,11 +86,6 @@ void updatePhysics(PhysObj& obj1, double dt, PhysicalObject *homer) {
             << homer->position.z << ")\n";
     applyTornadoForce(homer, origin, dt);
     homer->position += homer->velocity * dt;
-    std::cout << "Homer after: ("
-            << homer->position.x << ", "
-            << homer->position.y << ", "
-            << homer->position.z << ")\n";
-
     // Atualiza a posição do PhysObj com a posição do homer (sincroniza)
     obj1.position = homer->position;
     obj1.vy = static_cast<float>(homer->velocity.y);
@@ -122,6 +117,16 @@ void updatePhysics(PhysObj& obj1, double dt, PhysicalObject *homer) {
             obj1.vy = 0.0f;
         }
     }
+}
+
+bool checkAABBCollision(const AABB& a, const glm::vec3& posA,
+                        const AABB& b, const glm::vec3& posB) {
+    return (a.min_corner.x + posA.x <= b.max_corner.x + posB.x &&
+            a.max_corner.x + posA.x >= b.min_corner.x + posB.x &&
+            a.min_corner.y + posA.y <= b.max_corner.y + posB.y &&
+            a.max_corner.y + posA.y >= b.min_corner.y + posB.y &&
+            a.min_corner.z + posA.z <= b.max_corner.z + posB.z &&
+            a.max_corner.z + posA.z >= b.min_corner.z + posB.z);
 }
 
 GLuint createVAO(const std::vector<glm::vec3>& vertices, const std::vector<glm::vec3>& normals) {
@@ -332,10 +337,27 @@ int main(int argc, char** argv) {
         for (int i = 0; i < nObjetos; ++i) {
             updatePhysics(objboxs[i], dt, &objetos[i]);
             objetos[i].position = objboxs[i].position;//sincroniza box com objeto
-            std::cout << "Homer position: ("
-            << objetos[i].position.x << ", "
-            << objetos[i].position.y << ", "
-            << objetos[i].position.z << ")\n";
+            // Verifica colisão com todos os outros objetos
+            for (int j = i + 1; j < nObjetos; ++j) {
+                if (checkAABBCollision(objboxs[i].bbox, objetos[i].position,
+                                    objboxs[j].bbox, objetos[j].position)) {
+
+                    // Vetor entre os centros
+                    glm::vec3 dir = objetos[j].position - objetos[i].position;
+                    if (glm::length(dir) < 1e-5f) dir = glm::vec3(1.0f, 0.0f, 0.0f);
+                    dir = glm::normalize(dir);
+
+                    // Reposicionamento leve
+                    float push = 0.05f;
+                    objetos[i].position -= dir * push;
+                    objetos[j].position += dir * push;
+
+                    // Inversão das velocidades como resposta simplificada
+                    std::swap(objetos[i].velocity, objetos[j].velocity);
+                    objboxs[i].position = objetos[i].position;
+                    objboxs[j].position = objetos[j].position;
+                }
+            }
         }
 
         glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
