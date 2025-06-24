@@ -1,11 +1,13 @@
 #include <iostream>
 #include <glm/glm.hpp>
+#include <glm/gtc/random.hpp>
 #include "hpp/materials.hpp" //predefinição de alguns materiais
 #include <map>
 #include <vector>
 #include "hpp/physics.hpp"
 #include <cmath>
 #include <string>
+#include <algorithm>
 
 // Usando glm::vec3 para vetores 3D
 using Vec3 = glm::dvec3;  // double precision vec3
@@ -73,57 +75,111 @@ void applyTornadoForce(PhysicalObject* obj, glm::vec3 center, double dt) {
     }
 }
 
-/// Cria uma malha de tecido e armazena em obj
-void createCloth(PhysicalObject* obj, int n_faces) {
-    if (!obj || n_faces <= 0) return;
+// Cria o tecido
+void createCloth(Cloth &cloth, int nFaces,
+                 float spacing = 1.0f,
+                 float initialHeight = 10.0f) {
+    if (nFaces <= 0) return;
 
-    // Limpa qualquer dado anterior
-    obj->vertices.clear();
-    obj->normals.clear();
-    obj->faces.clear();
-    obj->materials.clear();
+    // Limpa dados
+    cloth.positions.clear();
+    cloth.velocities.clear();
+    cloth.edges.clear();
+    cloth.restLengths.clear();
 
-    // Calcular dimensões do grid a partir de n_faces (2 triângulos por quadrado)
-    int quads = n_faces / 2;
-    int grid_size = std::sqrt(quads);
-    if (grid_size * grid_size != quads) {
-        // Ajusta para próximo valor quadrado se necessário
-        grid_size = std::ceil(std::sqrt(quads));
+    // Calcular o grid do tecido, considerando que cada face é um quadrado
+    int quads = nFaces / 2;
+    int gridSize = static_cast<int>(std::sqrt(quads));
+    if (gridSize * gridSize < quads) {
+        gridSize = static_cast<int>(std::ceil(std::sqrt(quads)));
     }
 
-    float spacing = 1.0f;
+    // Calcular o deslocamento para centralizar o tecido na cena
+    float offsetX = (gridSize * spacing) / 2.0f;
+    float offsetZ = (gridSize * spacing) / 2.0f; 
 
-    // Gerar vértices: grid (grid_size + 1) x (grid_size + 1)
-    for (int y = 0; y <= grid_size; ++y) {
-        for (int x = 0; x <= grid_size; ++x) {
-            glm::vec3 position = glm::vec3(x * spacing, 0.0f, y * spacing);
-            obj->vertices.push_back(position);
-            obj->normals.push_back(glm::vec3(0, 1, 0));  // Normais iniciais para cima
+    // Inicializa as posições 
+    for (int y = 0; y <= gridSize; ++y) {
+        for (int x = 0; x <= gridSize; ++x) {
+            cloth.positions.emplace_back(x * spacing - offsetX, // Centraliza no X
+                                         initialHeight,
+                                         y * spacing - offsetZ); // Centraliza no Z
         }
     }
 
-    // Gerar faces (2 triângulos por quadrado)
-    for (int y = 0; y < grid_size; ++y) {
-        for (int x = 0; x < grid_size; ++x) {
-            int i = y * (grid_size + 1) + x;
-            int i_right = i + 1;
-            int i_down = i + (grid_size + 1);
-            int i_diag = i_down + 1;
+    // veloc inicial = 0
+    cloth.velocities.assign(cloth.positions.size(), glm::vec3(0.0f));
 
-            // Triângulo 1
-            obj->faces.push_back(Face({(unsigned int)i, (unsigned int)i_right, (unsigned int)i_down}, {}, "cloth"));
-            obj->faces.push_back(Face({(unsigned int)i_right, (unsigned int)i_diag, (unsigned int)i_down}, {}, "cloth"));
-
+    // 5) COnstrói as arestas do tecido
+    auto idx = [gridSize](int x, int y) {
+        return y * (gridSize + 1) + x;
+    };
+    for (int y = 0; y <= gridSize; ++y) {
+        for (int x = 0; x <= gridSize; ++x) {
+            // horizontal neighbor
+            if (x < gridSize) {
+                cloth.edges.emplace_back(idx(x,y), idx(x+1,y));
+            }
+            // vertical neighbor
+            if (y < gridSize) {
+                cloth.edges.emplace_back(idx(x,y), idx(x,y+1));
+            }
         }
     }
 
-    // Define material básico
-    Material clothMaterial;
-    clothMaterial.ambient = glm::vec3(0.2f, 0.2f, 0.2f);
-    clothMaterial.diffuse = glm::vec3(0.7f, 0.7f, 0.9f);
-    clothMaterial.specular = glm::vec3(0.1f, 0.1f, 0.1f);
-    clothMaterial.shininess = 16.0f;
-
-    obj->materials["cloth"] = clothMaterial;
+    cloth.restLengths.reserve(cloth.edges.size());
+    for (auto &e : cloth.edges) {
+        int i = e.first;
+        int j = e.second;
+        float rest = glm::length(cloth.positions[j] - cloth.positions[i]);
+        cloth.restLengths.push_back(rest);
+    }
 }
+
+
+// Determina o damping e a força elástica para cada aresta do tecido
+void computeSpringForces(const Cloth& C, std::vector<glm::vec3>& F) {
+  float ks=100.f, kd=1.5f;
+  int M = C.edges.size();
+  for(int k=0; k<M; ++k){
+    auto [i,j] = C.edges[k];
+    glm::vec3 L = C.positions[j] - C.positions[i];
+    float len = glm::length(L);
+    glm::vec3 dir = L/len;
+    glm::vec3 vrel = C.velocities[j] - C.velocities[i];
+    glm::vec3 F_s = -ks*(len - C.restLengths[k])*dir;
+    glm::vec3 F_d = -kd*(glm::dot(vrel,dir))*dir;
+    F[i] -= (F_s+F_d);
+    F[j] += (F_s+F_d);
+  }
+}
+
+// Aplica gravidade no tecido (vento removido)
+void applyExternalForces(const Cloth& C, std::vector<glm::vec3>& F) {
+  int N=C.positions.size();
+  glm::vec3 g(0,-0.98f,0);
+  for(int i=0;i<N;++i){
+    F[i] += g * C.mass;
+    // wind randômico
+    // F[i] += glm::vec3(
+    //   glm::linearRand(-0.1f,0.1f),
+    //   glm::linearRand(-0.1f,0.1f),
+    //   glm::linearRand(-0.1f,0.1f)
+    // );
+  }
+}
+
+// Integrador RK4
+void integrateCloth(Cloth& C, float dt){
+  int N=C.positions.size();
+  std::vector<glm::vec3> F(N), a(N);
+  computeSpringForces(C, F);
+  applyExternalForces(C, F);
+  for(int i=0;i<N;++i){
+    a[i] = F[i] / C.mass;
+    C.velocities[i] += a[i] * dt;
+    C.positions[i]  += C.velocities[i] * dt;
+  }
+}
+
 

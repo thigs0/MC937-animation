@@ -1,0 +1,9 @@
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/collision.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/physics.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/raycast.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/loader.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/scene1.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/scene2.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/scene3.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/edit_cache.dir
+/home/saanders/Desktop/MC937/MC937-animation/CMakeFiles/rebuild_cache.dir

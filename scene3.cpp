@@ -30,7 +30,7 @@ glm::vec3 origin = glm::vec3(0.0f, 0.0f, 0.0f); // defina o centro do tornado co
 double deltaTime = 0.016; // ou o valor real do seu timestep/frame
 
 float dt = 0.0001; //variação de tempo
-int mframe = 3000;
+int mframe = 100;
 Material m = gold; // mapa de cor do ouro
 glm::vec3 lightPos(5, 10, 5), lightColor(1, 0.1, 1); //cor branca global
 //viewport
@@ -335,9 +335,11 @@ int main(int argc, char** argv) {
         std::cout << "Frame " << frame << "\n";
 
         for (int i = 0; i < nObjetos; ++i) {
+            std::cout << "Caclulate physics obj " << i << "\n";
             updatePhysics(objboxs[i], dt, &objetos[i]);
             objetos[i].position = objboxs[i].position;//sincroniza box com objeto
             // Verifica colisão com todos os outros objetos
+            std::cout << "Checking colision obj " << i << "\n";
             for (int j = i + 1; j < nObjetos; ++j) {
                 if (checkAABBCollision(objboxs[i].bbox, objetos[i].position,
                                     objboxs[j].bbox, objetos[j].position)) {
@@ -364,6 +366,8 @@ int main(int argc, char** argv) {
         glm::vec3 hitColor(0.0f);
         std::vector<Pixel> framebuffer(width * height);
 
+        std::cout << "Building scene " << "\n";
+
         glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
         float aspect = static_cast<float>(width) / static_cast<float>(height);
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
@@ -373,12 +377,17 @@ int main(int argc, char** argv) {
 
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
+
+                std::cout << "Raycasting pixel (" << x << ", " << y << ")\n";
+
+                // Calcula o raio a partir da posição da câmera
                 float ndcX = (2.0f * x) / width - 1.0f;
                 float ndcY = 1.0f - (2.0f * y) / height;
                 glm::vec4 ndc = glm::vec4(ndcX, ndcY, -1.0f, 1.0f);
                 glm::vec4 worldRay4 = invViewProj * ndc;
                 worldRay4 /= worldRay4.w;
 
+                // Normaliza o vetor de direção do raio
                 float px = (2.0f * (x + 0.5f) / width - 1.0f) * imagePlaneWidth * 0.5f;
                 float py = (1.0f - 2.0f * (y + 0.5f) / height) * imagePlaneHeight * 0.5f;
                 glm::vec3 pixelPos = cameraPos + forward + px * right + py * camUp;
@@ -389,6 +398,7 @@ int main(int argc, char** argv) {
 
                 float minDist = 1e20f;
 
+                // Verifica interseção com o chão
                 float closestT = 1e30f;
                 glm::vec3 hitPoint, hitNormal;
                 Material hitMat = gold;
@@ -408,6 +418,7 @@ int main(int argc, char** argv) {
                         glm::vec3 hitPos, normal;
                         float t, u, v;
 
+                        // Verifica interseção do raio com o triângulo
                         if (rayTriangleIntersect(cameraPos, dir, v0w, v1w, v2w, t, u, v)) {
                             if (t < closestT) {
                                 closestT = t;
@@ -442,6 +453,7 @@ int main(int argc, char** argv) {
             }
         }
 
+        std::cout << "Saving..." << "\n";
         // Salvar imagem
         std::ostringstream oss;
         oss << "./frame/scene3/" << std::setw(3) << std::setfill('0') << frame << ".png";

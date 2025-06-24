@@ -20,6 +20,13 @@ struct Face {
     std::string material_name;
 };
 
+struct Cloth {
+  std::vector<glm::vec3> positions;       // N partículas
+  std::vector<glm::vec3> velocities;      // N velocidades
+  std::vector<std::pair<int,int>> edges;  
+  std::vector<float> restLengths;        
+  float mass = 0.9f;
+};
 
 struct PhysicalObject {
     double mass;
@@ -37,6 +44,12 @@ struct PhysicalObject {
 
 void update_ambient_forces(PhysicalObject* obj, double dt);
 void applyTornadoForce(PhysicalObject* obj, glm::vec3 center, double dt);
-void createCloth(PhysicalObject* obj, int n_faces);
+void createCloth(Cloth &cloth, int nFaces,
+                 float spacing,
+                 float initialHeight);
+
+void computeSpringForces(const Cloth& C, std::vector<glm::vec3>& F);
+void applyExternalForces(const Cloth& C, std::vector<glm::vec3>& F);
+void integrateCloth(Cloth& C, float dt);
 
 #endif // PHYSICS_HPP

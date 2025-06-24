@@ -19,6 +19,13 @@ struct AABB
         min_corner{min}
     {}
 
+    // Checks if is valid 
+    bool contains(const glm::vec3& p) const {
+        return (p.x >= min_corner.x && p.x <= max_corner.x
+              && p.y >= min_corner.y && p.y <= max_corner.y
+              && p.z >= min_corner.z && p.z <= max_corner.z);
+    }
+
     // Returns the axis (0=x, 1=y, 2=z) where the box is largest
     unsigned short getLargestAxis() const
     {
